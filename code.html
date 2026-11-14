@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accessories — Your Next Store</title>
+<!-- Google Fonts: Playfair Display, Space Grotesk, Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#2a1800",
+            "surface-container-high": "#eae8e4",
+            "surface-dim": "#dbdad6",
+            "primary-fixed": "#e5e1e4",
+            "on-tertiary-container": "#ac7a36",
+            "surface-container-highest": "#e4e2de",
+            "text-muted": "#75726B",
+            "surface-container": "#efeeea",
+            "accent-bronze": "#D19B53",
+            "background": "#fbf9f5",
+            "on-background": "#1b1c1a",
+            "secondary": "#0030e1",
+            "outline-variant": "#c8c6ca",
+            "on-secondary-container": "#e1e2ff",
+            "badge-discount": "#FF3823",
+            "on-surface-variant": "#47464a",
+            "tertiary-fixed-dim": "#f6bc70",
+            "on-error-container": "#93000a",
+            "border-strong": "#121214",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#c8c6c8",
+            "inverse-on-surface": "#f2f0ec",
+            "primary": "#000000",
+            "surface-card": "#FFFFFF",
+            "secondary-fixed": "#dee0ff",
+            "on-error": "#ffffff",
+            "border-subtle": "#E7E4DC",
+            "on-tertiary-fixed-variant": "#643f00",
+            "secondary-fixed-dim": "#bbc3ff",
+            "on-secondary-fixed-variant": "#002bcf",
+            "surface-tint": "#5f5e60",
+            "inverse-primary": "#c8c6c8",
+            "accent-electric": "#2B4CFF",
+            "tertiary-fixed": "#ffddb6",
+            "primary-container": "#1b1b1d",
+            "inverse-surface": "#30312e",
+            "on-primary-fixed-variant": "#474649",
+            "surface-canvas": "#F8F6F2",
+            "on-secondary-fixed": "#000e5e",
+            "surface-container-low": "#f5f3ef",
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#2a1800",
+            "surface-variant": "#e4e2de",
+            "secondary-container": "#2d4dff",
+            "outline": "#77767b",
+            "surface": "#fbf9f5",
+            "on-surface": "#1b1c1a",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-container": "#858386",
+            "surface-elevated": "#FFFFFF",
+            "tertiary": "#000000",
+            "on-primary-fixed": "#1b1b1d",
+            "text-primary": "#121214",
+            "surface-dark": "#121214",
+            "surface-bright": "#fbf9f5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1.25rem",
+            "space-2xl": "3.5rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-xl": "2.25rem",
+            "gutter": "1rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Playfair Display"],
+            "price-tag": ["Space Grotesk"],
+            "headline-md": ["Playfair Display"],
+            "body-sm": ["Geist"],
+            "headline-lg-mobile": ["Playfair Display"],
+            "body-lg": ["Geist"],
+            "body-md": ["Geist"],
+            "title-editorial": ["Space Grotesk"],
+            "display-hero": ["Playfair Display"],
+            "badge-micro": ["Geist"],
+            "label-caps": ["Space Grotesk"],
+            "display-hero-mobile": ["Playfair Display"]
+          },
+          "fontSize": {
+            "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "price-tag": ["15px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "title-editorial": ["15px", { "lineHeight": "20px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display-hero": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "badge-micro": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.12em", "fontWeight": "600" }],
+            "display-hero-mobile": ["34px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbar for clean horizontal filter carousel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary antialiased min-h-screen selection:bg-text-primary selection:text-white pb-32">
+<!-- TopAppBar Component (from Shared Components JSON) -->
+<header class="bg-background/90 dark:bg-surface-dark/90 backdrop-blur-md text-text-primary dark:text-inverse-on-surface docked full-width top sticky top-0 z-40 border-b border-border-subtle dark:border-outline-variant/20 shadow-none">
+<div class="flex justify-between items-center w-full px-5 py-3.5 max-w-screen-md mx-auto">
+<div class="flex items-center gap-3">
+<button aria-label="Menu" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-[22px]">menu</span>
+</button>
+<a class="flex items-center gap-2" href="/">
+<div class="w-5 h-5 bg-text-primary text-background rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">shopping_bag</span>
+</div>
+<span class="text-title-editorial font-title-editorial uppercase tracking-widest text-text-primary dark:text-inverse-on-surface">Your Next Store</span>
+</a>
+</div>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-2">
+<button aria-label="Search" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button aria-label="Bag" class="relative w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-accent-electric text-white text-badge-micro font-badge-micro rounded-full flex items-center justify-center">2</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Editorial Canvas -->
+<main class="max-w-screen-md mx-auto px-5 pt-4">
+<!-- Breadcrumbs Navigation -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-label-caps font-label-caps text-text-muted mb-4 uppercase">
+<a class="hover:text-text-primary transition-colors" href="/">Home</a>
+<span class="text-border-strong/30 text-[10px]">/</span>
+<span class="text-text-primary font-semibold">Accessories</span>
+</nav>
+<!-- Editorial Hero Section -->
+<section class="mb-8 pt-1">
+<div class="flex items-center justify-between gap-3 mb-2.5">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full border border-border-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-accent-electric"></span>
+<span class="text-label-caps font-label-caps uppercase text-text-primary">SS26 Capsule</span>
+</div>
+<span class="text-body-sm font-body-sm text-text-muted">7 Pieces Selected</span>
+</div>
+<h1 class="text-display-hero-mobile md:text-display-hero font-display-hero-mobile md:font-display-hero text-text-primary tracking-tight mb-3">
+        Accessories
+      </h1>
+<p class="text-body-md font-body-md text-text-muted max-w-lg leading-relaxed">
+        Curated objects of form &amp; function. Online commerce should be fast, simple, and modern.
+      </p>
+</section>
+<!-- Refined Horizontal Filter Bar -->
+<section class="mb-7 -mx-5 px-5 overflow-x-auto no-scrollbar flex items-center gap-2 pb-1">
+<!-- Filter Sheet Trigger Button -->
+<button class="flex items-center gap-1.5 px-4 py-2 bg-text-primary text-white rounded-full text-label-caps font-label-caps uppercase active:scale-95 transition-transform flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filters</span>
+</button>
+<!-- Active Selection Filter Pill -->
+<button class="flex items-center gap-1.5 px-4 py-2 bg-surface-card border border-text-primary text-text-primary rounded-full text-label-caps font-label-caps uppercase active:scale-95 transition-all flex-shrink-0">
+<span>Lifestyle</span>
+<span class="w-1.5 h-1.5 rounded-full bg-accent-electric"></span>
+</button>
+<!-- Category Filter Pills -->
+<button class="px-4 py-2 bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary rounded-full text-label-caps font-label-caps uppercase active:scale-95 transition-all flex-shrink-0">
+        Color
+      </button>
+<button class="px-4 py-2 bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary rounded-full text-label-caps font-label-caps uppercase active:scale-95 transition-all flex-shrink-0">
+        Price
+      </button>
+<button class="flex items-center gap-1 px-4 py-2 bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary rounded-full text-label-caps font-label-caps uppercase active:scale-95 transition-all flex-shrink-0">
+<span>Sort</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+</section>
+<!-- Product Showcase (Curated Asymmetric Mobile Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
+<!-- Product 1: Azure Drift (Hero Exhibition Feature) -->
+<article class="col-span-1 md:col-span-2 group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300">
+<div class="relative w-full aspect-[4/3] bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
+<img alt="Azure Drift Luxury Bag" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="A modern luxury sky blue leather handbag with sculpted bamboo curved top handle displayed in an avant-garde editorial studio. The bag rests gracefully on a pale limestone plinth against a warm off-white minimalist background with soft directional natural lighting casting subtle warm shadows. High-end fashion catalog aesthetic with tactile leather texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXHK8drnnP9l7NsNXoazb2ZeEwYd7WG7iSL95e9WKldh74rX2p0cMVV1oqFn83LaNkdvbPN5g-htuGoSJOepBmSI9U3axvWuBanD_dws2c1FoDFshsjYGKV8-jQUKvLaaltAxY6pKhUUVc-cAoia4p7flw7KYG3fluRAaL57s4QafkQFp6v8KfSqJCa6t4NsBtXW4mlE8l_yTWiUlO0l9YqmR3hA06jcixItl5GX"/>
+<!-- Badges & Triggers -->
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-surface-dark/70 backdrop-blur-md text-white text-label-caps font-label-caps rounded-full uppercase tracking-wider">
+              Curator’s Pick
+            </span>
+</div>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<!-- Floating Price Capsule -->
+<div class="absolute bottom-4 left-4">
+<span class="px-3.5 py-1.5 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $613.77
+            </span>
+</div>
+<!-- Quick Buy Floating Trigger -->
+<button aria-label="Add Azure Drift to cart" class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-text-primary text-white flex items-center justify-center shadow-lg active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<div class="p-5 flex items-start justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Leather Goods</span>
+<h2 class="text-headline-md font-headline-md text-text-primary tracking-tight">Azure Drift</h2>
+</div>
+<span class="text-label-caps font-label-caps text-accent-electric font-semibold uppercase tracking-wider pt-1">In Stock</span>
+</div>
+</article>
+<!-- Product 2: Ocean Bloom -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
+<img alt="Ocean Bloom Bag" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="A structured vibrant cobalt and azure blue leather tote bag featuring warm ochre tan leather dual handles photographed in a high-fashion clean white studio set. Soft diffused studio lighting accentuates the crisp stitched seams and architectural profile against a warm sand neutral backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGhW40SSbL1Mb61hI2ByCrnYmucwLiGPrzmG_j2-pWFi5dOirCvbacDjms1Mywvt2vkoVVUV7GBET9vbcRynAiKXWYR-PYqNM6k-yAsDKA_gdm-3P2Q27xhJS0Eh_tRR6B0QUKx9xSPpmmtjIXVOnayWyLi4z_M8IeYfLGO7h36eDEoqhW4iMz8bjTrYaKBgV1yFDdAwhqCfxa8v5-vDzPeHtJEF1QUKuGZnlC2S-a"/>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $553.50
+            </span>
+</div>
+<button aria-label="Add Ocean Bloom to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Tote</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Ocean Bloom</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Dual Tone Handle</span>
+<span class="text-text-primary font-medium">$553.50</span>
+</div>
+</div>
+</article>
+<!-- Product 3: Le Bag Autre (Luxury Burgundy) -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
+<img alt="Le Bag Autre" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="An ultra-luxurious deep burgundy polished calfskin leather shoulder handbag with sleek geometric paneling and slender handles standing upright in a museum-grade spotlight setup. Deep wine red tones glisten under subtle rim lighting with deep contrasted shadows on an uncoated warm grey floor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWxOljzOGVKz4x4LpPvY9yuZjDtG2aJBanv5gKISb3z5-VqGbnKa2gsSFpZ70Hw1R8DmlNJZTLeUiOjKhX0zlooBIwFKMYD_63o6lvnPqHFWg5Op7H3F082Syim5qkR6fZNxm6e_YdJHRFOBcaeB97cARYtivtU810YoV7wrYqkr5iX1xAM3qeKh9fpriM85qLAH_AiR8vb1_HnPQ5bYsSNU_jGoPQ24b6briY_eln"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-0.5 bg-text-primary text-white text-badge-micro font-badge-micro uppercase tracking-widest rounded-full">
+              Signature
+            </span>
+</div>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $2,458.77
+            </span>
+</div>
+<button aria-label="Add Le Bag Autre to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Edition Limitée</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Le Bag Autre</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Calfskin Polish</span>
+<span class="text-text-primary font-medium">$2,458.77</span>
+</div>
+</div>
+</article>
+<!-- Product 4: Aqua Stride Bottle -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-8 overflow-hidden">
+<img alt="Aqua Stride Bottle" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="A minimalist architectural thermal water bottle engineered with matte dark graphite body and an anodized copper bronze cylindrical top cap. Crisp studio photograph with sleek vertical metallic reflections and subtle warm ambient daylight against a pure off-white backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4M9Xkburnj7wVjerQuDbo3wYzrNOzcb2Ac0T_q-ZQT7nMHBV8WpzEUDK6tsEp2SZ2quInRGjnSXaOk_oioghPQCJAnZF9d_vJmySMBqQ4dDqLfBMx_2d4c1LsLGO-W0HUagWNfqrlCTPo4tflHDxvzzw_e6LLGpIn0v5I6lf9LGgnnIsqjaKrMhlZ69RxUVyGEvQrAl6r_Z83bYqWM3kpgwpg7ksdQfbyO3CZ_U1x"/>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $121.77
+            </span>
+</div>
+<button aria-label="Add Aqua Stride Bottle to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Drinkware</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Aqua Stride Bottle</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Thermal Bronze</span>
+<span class="text-text-primary font-medium">$121.77</span>
+</div>
+</div>
+</article>
+<!-- Product 5: Horizon Gaze Sunglasses -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-8 overflow-hidden">
+<img alt="Horizon Gaze Sunglasses" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="Sophisticated square black acetate designer sunglasses with warm amber sepia tinted lenses displayed flat lay on a warm parchment surface. Fine polished reflections along the dark frames with subtle golden hour indoor illumination highlighting luxury craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVYFoKGzSiTRSNXeWxWCgb3hM21eu692d3IvIErdW-WT4Hfqm4waFuBwnQj0SYGlJHWk0NSt1u3NbpnBI8ipX3CBliibtpqkfJJW1znPUVbL1ClHuW2H_PNV2TyDpYmikTAolBaie6BPz-1kXLfzPftgMwj6pojLAgxrIamMPELSUUs5H0gwanc9Iph3Rd1ujKrHaRkmTEDcIv86_Mde4gOJgH1OmVzHKqvitKIXYA"/>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $61.50
+            </span>
+</div>
+<button aria-label="Add Horizon Gaze Sunglasses to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Eyewear</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Horizon Gaze Sunglasses</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Amber Lenses</span>
+<span class="text-text-primary font-medium">$61.50</span>
+</div>
+</div>
+</article>
+<!-- Product 6: Shadow Stride Shoes -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
+<img alt="Shadow Stride Shoes" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="A top-down bird-eye view of a pair of refined midnight black and charcoal woven lifestyle sneakers with crisp white minimalist soles and dark navy laces resting on an editorial cream stone floor. Controlled studio overhead lighting captures tactile fabric texture and balanced symmetry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-7rNap8iLkKSBe-NfIhu4TiysoY_PWnFCQJaRRVlTao-h1dtAn_8WY77gipZO5ojo0rhHxz3c685qrirSxh37D4j0NL4jrPTiGCkFpYYh-vWjCezTfF4lEvqwIjZZowA_jV2qPMEOkZdBXf9U3J6SMI82aGzPtPG1s2acdaHl4WGvM7vRs9sO-9UUkLRH1aA4HSpchctmhQzm9rJ_XV5QgCrfGAuD3gwbIlhXGslJ"/>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $147.60
+            </span>
+</div>
+<button aria-label="Add Shadow Stride Shoes to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Footwear</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Shadow Stride Shoes</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Midnight Charcoal</span>
+<span class="text-text-primary font-medium">$147.60</span>
+</div>
+</div>
+</article>
+<!-- Product 7: Sunbeam Tote -->
+<article class="group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
+<img alt="Sunbeam Tote" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="An artisanal blush terracotta canvas shoulder tote bag featuring intricate tone-on-tone botanical motif embossing and fine leather trim with playful tassels. Captured in a warm sundrenched Mediterranean interior with soft organic shadows on a warm neutral wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjcL-_7jFsDm7Q2YXKkJ-RT1NPMZ3Nlgs01271V6gcdi4NHPUf2Vx2vpuG9dZCqwHYiSpzXx7A1lW_xL462lJPt0yygA5lG2VDLZRKGxfNGHJWHk3e90Zq3b45BUNTMCtINkFAkMErcEuMuAk4azoxycdhwQUn_eofhiEWSigUUZT7eVgwj6UJkRTTlyXDKABZz-J-sQS6QzK0gj0S3oNbJQmCXizJIkx48VAR8wDS"/>
+<button aria-label="Add to wishlist" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle text-price-tag font-price-tag rounded-full shadow-sm">
+              $121.77
+            </span>
+</div>
+<button aria-label="Add Sunbeam Tote to cart" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-label-caps font-label-caps text-text-muted uppercase tracking-wider block mb-1">Canvas Tote</span>
+<h2 class="text-headline-md font-headline-md text-text-primary">Sunbeam Tote</h2>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-text-muted">
+<span>Terracotta Emboss</span>
+<span class="text-text-primary font-medium">$121.77</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Editorial Brand Statement Banner -->
+<section class="bg-surface-dark text-white rounded-3xl p-7 md:p-10 mb-12 relative overflow-hidden">
+<div class="relative z-10 max-w-md">
+<span class="text-label-caps font-label-caps uppercase text-accent-electric tracking-widest block mb-3">Manifesto</span>
+<blockquote class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg leading-snug mb-6 text-white">
+          “Online commerce should be fast, simple, and modern.”
+        </blockquote>
+<div class="flex items-center gap-4 pt-2">
+<a aria-label="Follow us on X" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" href="https://x.com/yournextstore" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+</a>
+<a aria-label="Connect on LinkedIn" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" href="https://www.linkedin.com/company/yournextstore" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path></svg>
+</a>
+<div class="h-4 w-px bg-white/20 mx-1"></div>
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-full text-badge-micro font-badge-micro uppercase tracking-wider text-white transition-colors" href="https://yournextstore.com/?utm_source=yns-store&amp;utm_medium=referral&amp;utm_campaign=demo" target="_blank">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+<span>Made with YNS</span>
+</a>
+</div>
+</div>
+<!-- Subtle architectural circle background embellishment -->
+<div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full border border-white/5 pointer-events-none"></div>
+<div class="absolute -right-4 -bottom-4 w-48 h-48 rounded-full border border-white/10 pointer-events-none"></div>
+</section>
+<!-- Comprehensive Mobile Brand Footer -->
+<footer class="pt-8 border-t border-border-subtle">
+<!-- Main Brand Info -->
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-5 h-5 bg-text-primary text-background rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">shopping_bag</span>
+</div>
+<span class="text-title-editorial font-title-editorial uppercase tracking-widest text-text-primary">Your Next Store</span>
+</div>
+<p class="text-body-sm font-body-sm text-text-muted">
+          Online commerce should be fast, simple, and modern.
+        </p>
+</div>
+<!-- Links Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+<!-- Shop Group -->
+<div>
+<h3 class="text-label-caps font-label-caps uppercase text-text-primary tracking-wider mb-3">Shop</h3>
+<ul class="space-y-2 text-body-sm font-body-sm">
+<li><a class="text-text-primary font-medium" href="/category/accessories">Accessories</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/category/apparel">Apparel</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/category/digital">Digital</a></li>
+</ul>
+</div>
+<!-- Support Group -->
+<div>
+<h3 class="text-label-caps font-label-caps uppercase text-text-primary tracking-wider mb-3">Support</h3>
+<ul class="space-y-2 text-body-sm font-body-sm">
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/about">About Us</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/contact">Contact Us</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/faq">FAQ</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/blog">Blog</a></li>
+</ul>
+</div>
+<!-- Legal Group -->
+<div class="col-span-2 md:col-span-1">
+<h3 class="text-label-caps font-label-caps uppercase text-text-primary tracking-wider mb-3">Legal</h3>
+<ul class="space-y-2 text-body-sm font-body-sm">
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/legal/terms">Terms of Service</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/legal/privacy-policy">Privacy Policy</a></li>
+<li><a class="text-text-muted hover:text-text-primary transition-colors" href="/legal/returns">Return Policy</a></li>
+</ul>
+</div>
+</div>
+<!-- Payment Gateways & Badges -->
+<div class="pt-6 border-t border-border-subtle flex flex-wrap items-center justify-between gap-4 mb-4">
+<span class="text-badge-micro font-badge-micro text-text-muted uppercase tracking-wider">
+          © 2026 Your Next Store. All rights reserved.
+        </span>
+<div class="flex items-center gap-2 text-text-muted">
+<div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">VISA</div>
+<div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">MC</div>
+<div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">APPLE PAY</div>
+<div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">G PAY</div>
+<div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">KLARNA</div>
+</div>
+</div>
+</footer>
+</main>
+<!-- BottomNavBar Component (from Shared Components JSON) -->
+<!-- Active state set to 'Discover' for category navigation experience -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 py-2.5 max-w-sm mx-auto safe-area-inset-bottom rounded-full mb-4 border border-border-subtle dark:border-outline-variant/30 bg-surface-elevated/90 dark:bg-surface-dark/90 backdrop-blur-xl shadow-[0_16px_36px_-8px_rgba(18,18,20,0.12)]">
+<!-- Item 1: Discover (Active) -->
+<a aria-label="Discover" class="flex flex-col items-center justify-center text-primary dark:text-inverse-on-surface font-semibold hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-90 transition-transform duration-200" href="/category/accessories">
+<span class="material-symbols-outlined text-[20px] fill-icon">explore</span>
+<span class="text-label-caps font-label-caps mt-0.5">Discover</span>
+</a>
+<!-- Item 2: Search -->
+<a aria-label="Search" class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-90 transition-transform duration-200" href="/search">
+<span class="material-symbols-outlined text-[20px]">search</span>
+<span class="text-label-caps font-label-caps mt-0.5">Search</span>
+</a>
+<!-- Item 3: Curated -->
+<a aria-label="Curated" class="flex flex-col items-center justify-center text-text-muted dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-90 transition-transform duration-200" href="/curated">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+<span class="text-label-caps font-label-caps mt-0.5">Curated</span>
+</a>
+<!-- Item 4: Bag -->
+<a aria-label="Bag" class="relative flex flex-col items-center justify-center text-text-muted dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-90 transition-transform duration-200" href="/bag">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+<span class="text-label-caps font-label-caps mt-0.5">Bag</span>
+<span class="absolute -top-1 right-1 w-3.5 h-3.5 bg-accent-electric text-white text-[9px] font-bold rounded-full flex items-center justify-center">2</span>
+</a>
+</nav>
+<!-- Interactive Quick Cart Toast Feedback (Vanilla JS) -->
+<script>
+    document.querySelectorAll('button[aria-label^="Add"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          const original = icon.textContent;
+          icon.textContent = 'check';
+          btn.classList.add('bg-accent-electric');
+          setTimeout(() => {
+            icon.textContent = original;
+            btn.classList.remove('bg-accent-electric');
+          }, 1200);
+        }
+      });
+    });
+
+    document.querySelectorAll('button[aria-label="Add to wishlist"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.classList.toggle('fill-icon');
+          icon.classList.toggle('text-badge-discount');
+        }
+      });
+    });
+  </script>
+</body></html>

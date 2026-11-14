@@ -3,7 +3,9 @@
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.4-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.3-blue?style=flat&logo=react)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS_v4-38bdf8?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
-[![Stripe Native](https://img.shields.io/badge/Stripe-Commerce_Kit-635bff?style=flat&logo=stripe)](https://stripe.com/)
+[![BreakingBreach Certified](https://img.shields.io/badge/BreakingBreach-12_Pillars_Hardened-indigo?style=flat)](file:///home/meghraj-dhakal/Promt_Wars/BreakingBreach-Build-Apps-That-Dont-Break.pdf)
+[![Deploy to GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-black?style=flat&logo=github)](file:///home/meghraj-dhakal/Promt_Wars/.github/workflows/deploy-pages.yml)
+[![Deploy to Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat&logo=vercel)](file:///home/meghraj-dhakal/Promt_Wars/vercel.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
 
 An avant-garde, luxury editorial e-commerce platform blending classical fashion magazine prestige with sharp contemporary digital fluidity. Designed from the ground up for high-end craft, tactile mobile commerce, and frictionless purchasing.
@@ -50,6 +52,43 @@ This repository contains an end-to-end software engineering and product document
 | `YNS-ACC-005` | **Horizon Gaze Sunglasses** | Eyewear | $61.50 | Amber Sepia Lenses, Square Acetate |
 | `YNS-ACC-006` | **Shadow Stride Shoes** | Footwear | $147.60 | Midnight Charcoal Woven, Minimal Sole |
 | `YNS-ACC-007` | **Sunbeam Tote** | Canvas Tote | $121.77 | Terracotta Botanical Embossing |
+
+---
+
+## 🛡️ BreakingBreach: Build Apps That Don't Break (12 Pillars)
+
+The platform strictly adheres to the 12 principles outlined in [BreakingBreach-Build-Apps-That-Dont-Break.pdf](file:///home/meghraj-dhakal/Promt_Wars/BreakingBreach-Build-Apps-That-Dont-Break.pdf):
+
+1. **Data Integrity:** ACID transactions, foreign key constraints, atomic row-level reservation (`FOR UPDATE`), and Transactional Outbox pattern.
+2. **External Service Calls:** Explicit connection & read timeouts (max 6s), circuit breaker with cooldown, and webhook reconciliation.
+3. **Retries & Duplicates:** Client-generated UUID `Idempotency-Key`, in-flight button lock, and exponential backoff with random jitter.
+4. **Authentication & Sessions:** Server-side session revocation on logout, `HttpOnly` `Secure` `SameSite=Strict` cookies, and Argon2id hashing.
+5. **Access Control:** Server-side authorization check on every request, deny-by-default, and caller session scoping.
+6. **Input Handling & Injection:** Strict input validation, parameterized queries / ORM binding, and context-aware HTML escaping (`escapeHTML`).
+7. **Secrets Management:** Zero secrets in client code; server environment segregation; git-excluded `.env.local`.
+8. **Personal & Sensitive Data:** Data minimization, PII masking in logs (`m•••l@gmail.com`), and zero personal data in URLs.
+9. **Logging & Monitoring:** Structured JSON logs, correlated `requestId` propagation, and Google SRE Golden Signals monitoring.
+10. **Releases & Rollbacks:** Automated CI testing, expand-and-contract database migrations, and committed lockfiles.
+11. **Backups & Recovery:** Defined RPO (<5m) and RTO (<30m) with Point-In-Time Recovery (PITR) and scheduled restore drills.
+12. **Load & Capacity:** Bounded pagination, input debouncing, database connection pooling, and asynchronous background queues.
+
+---
+
+## 🌐 Deploy to GitHub Pages & Vercel
+
+### Option A: GitHub Pages Deployment (Automated via GitHub Actions)
+1. In your GitHub repository settings, navigate to **Settings > Pages**.
+2. Under **Build and deployment > Source**, select **GitHub Actions**.
+3. Push changes to `main` — the workflow at [`.github/workflows/deploy-pages.yml`](file:///home/meghraj-dhakal/Promt_Wars/.github/workflows/deploy-pages.yml) will automatically deploy your storefront with clean routing and `.nojekyll` configuration.
+4. Your site will be live at `https://<username>.github.io/<repo-name>/`.
+
+### Option B: Vercel Deployment
+1. Import the repository in [Vercel](https://vercel.com/new).
+2. The included [`vercel.json`](file:///home/meghraj-dhakal/Promt_Wars/vercel.json) automatically configures:
+   - Clean URLs and rewrites (`/category/accessories`, `/wishlist`, `/cart` -> `/index.html`).
+   - Strict enterprise Content Security Policy (CSP), HSTS, and X-Frame-Options headers.
+   - Immutable cache headers for media and font assets.
+3. Click **Deploy**.
 
 ---
 

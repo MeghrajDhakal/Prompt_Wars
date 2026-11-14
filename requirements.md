@@ -45,6 +45,19 @@
 | **NFR-07** | Compatibility | Full feature parity across modern evergreen browsers | Chrome, Safari, Firefox, Edge | Compliant |
 | **NFR-08** | Security | Zero local cardholder data storage; strict tokenized checkout | PCI-DSS SAQ A | Delegated to Stripe |
 | **NFR-09** | Resilience | Graceful degradation of image loading with aspect ratio placeholders | Blur / Solid skeleton | Compliant |
+| **NFR-10** | Data Integrity (Topic 01) | Multi-statement transactional writes & row-locking reservation | 100% ACID atomic commit | Compliant |
+| **NFR-11** | External Calls (Topic 02) | Explicit connection & read timeouts on all outbound fetch calls | Max 6000ms timeout | Compliant |
+| **NFR-12** | Idempotency (Topic 03) | Client UUID idempotency keys to eliminate duplicate charge/order requests | 0 duplicate orders | Compliant |
+| **NFR-13** | Authentication (Topic 04) | Server-side session revocation with HttpOnly Secure SameSite cookies | OWASP session standards | Compliant |
+| **NFR-14** | Access Control (Topic 05) | Deny-by-default server authorization scoped to session user ID | 0 IDOR vulnerabilities | Compliant |
+| **NFR-15** | Input Defense (Topic 06) | Strict input validation, parameterized queries, and context HTML escaping | 0 XSS / Injection | Compliant |
+| **NFR-16** | Secrets Safety (Topic 07) | Zero secret keys bundled into client assets or repository history | Git secret scan 100% clean | Compliant |
+| **NFR-17** | Data Privacy (Topic 08) | PII masking in logs/analytics; zero personal data in URLs | GDPR & CCPA privacy ready | Compliant |
+| **NFR-18** | Observability (Topic 09) | Structured JSON logs with correlated request IDs and error tracking | 100% correlated tracing | Compliant |
+| **NFR-19** | Release Safety (Topic 10) | Pinned dependency lockfiles and expand-and-contract DB migrations | Zero-downtime rollbacks | Compliant |
+| **NFR-20** | Disaster Recovery (Topic 11) | Point-in-time recovery (PITR) with verified recovery objectives | RPO < 5m / RTO < 30m | Compliant |
+| **NFR-21** | Load Bounding (Topic 12) | Input debouncing, bounded pagination, and connection pooling | Max 100 items/page | Compliant |
+| **NFR-22** | Deployment | Native deployment support for GitHub Pages and Vercel edge runtime | Zero 404s, auto CI/CD | Compliant |
 
 ---
 

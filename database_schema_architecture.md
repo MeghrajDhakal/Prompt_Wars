@@ -300,6 +300,60 @@ CREATE TABLE wishlist_items (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT uq_wishlist_product UNIQUE (wishlist_id, product_id)
 );
+
+-- 10. BreakingBreach Topic 03: Idempotency Keys (Duplicate Prevention)
+CREATE TABLE idempotency_keys (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    key VARCHAR(128) UNIQUE NOT NULL,
+    customer_id UUID REFERENCES customers(id) ON DELETE SET NULL,
+    request_path VARCHAR(255) NOT NULL,
+    request_hash VARCHAR(64) NOT NULL,
+    status VARCHAR(24) DEFAULT 'PROCESSING' CHECK (status IN ('PROCESSING', 'COMPLETED', 'FAILED')),
+    response_code INT,
+    response_body JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    expires_at TIMESTAMPTZ NOT NULL -- Typically 24 hours
+);
+
+-- 11. BreakingBreach Topic 01: Transactional Outbox (Reliable Multi-Service Events)
+CREATE TABLE outbox_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    aggregate_type VARCHAR(64) NOT NULL, -- e.g. 'ORDER', 'INVENTORY'
+    aggregate_id UUID NOT NULL,
+    event_type VARCHAR(64) NOT NULL,     -- e.g. 'ORDER_PAID', 'RECEIPT_EMAIL'
+    payload JSONB NOT NULL,
+    status VARCHAR(24) DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'PROCESSING', 'PUBLISHED', 'FAILED')),
+    retry_count INT DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    processed_at TIMESTAMPTZ
+);
+
+-- 12. BreakingBreach Topic 01 & 05: Atomic Inventory Decrement Procedure
+CREATE OR REPLACE FUNCTION reserve_inventory_atomic(
+    p_variant_id UUID,
+    p_quantity INT
+) RETURNS BOOLEAN AS $$
+DECLARE
+    v_available INT;
+BEGIN
+    -- Acquire exclusive row lock to prevent race conditions & overselling
+    SELECT (inventory_quantity - reserved_quantity)
+    INTO v_available
+    FROM product_variants
+    WHERE id = p_variant_id
+    FOR UPDATE;
+
+    IF v_available >= p_quantity THEN
+        UPDATE product_variants
+        SET reserved_quantity = reserved_quantity + p_quantity,
+            updated_at = NOW()
+        WHERE id = p_variant_id;
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
 ```
 
 ---
@@ -325,6 +379,10 @@ CREATE INDEX idx_carts_expires_at ON carts(expires_at);
 
 -- Orders by Customer & Date
 CREATE INDEX idx_orders_customer ON orders(customer_id, created_at DESC);
+
+-- BreakingBreach Performance Indexes
+CREATE INDEX idx_idempotency_key_lookup ON idempotency_keys(key, expires_at);
+CREATE INDEX idx_outbox_pending_events ON outbox_events(status, created_at ASC) WHERE status = 'PENDING';
 ```
 
 ---

@@ -228,3 +228,64 @@ Initiates a Stripe checkout session from cart contents.
   ```
 - **Webhook Signature Verification**: All incoming Stripe events are validated via `stripe.webhooks.constructEvent()` with raw payload buffers to defeat replay attacks.
 - **Error Tracking & Telemetry**: Sentry integration for client-side crash telemetry and OpenTelemetry tracing for API routes.
+
+---
+
+## 7. The BreakingBreach Anti-Breakage Framework (12 Pillars)
+
+Aligned with the authoritative guide **"Build Apps That Don't Break"**, the platform embeds defensive engineering across every tier:
+
+```mermaid
+graph LR
+    subgraph Part1 [Part 1: Data & Integrations]
+        T1["01 Data Integrity<br>(ACID & Outbox)"]
+        T2["02 External Calls<br>(Timeouts & Circuit Breaker)"]
+        T3["03 Retries & Duplicates<br>(Idempotency Keys)"]
+    end
+
+    subgraph Part2 [Part 2: Security]
+        T4["04 Auth & Sessions<br>(HttpOnly & Revocation)"]
+        T5["05 Access Control<br>(Deny-by-Default)"]
+        T6["06 Input & Injection<br>(Zod & Parameterized SQL)"]
+        T7["07 Secrets<br>(Zero Client Exposure)"]
+        T8["08 Sensitive Data<br>(Masking & No PII in URLs)"]
+    end
+
+    subgraph Part3 [Part 3: Operations]
+        T9["09 Logs & Monitoring<br>(JSON & Request IDs)"]
+        T10["10 Releases & Rollbacks<br>(Expand & Contract)"]
+        T11["11 Backups<br>(PITR & Restore Drills)"]
+        T12["12 Load & Capacity<br>(Bounded Work & Pools)"]
+    end
+```
+
+### Detailed Topic Specifications:
+
+| Topic | Potential Breaking Point | Preventative Architectural Measure | Implementation in Luxe Commerce |
+| :--- | :--- | :--- | :--- |
+| **01. Data Integrity** | Partial writes, concurrent overselling, dangling records. | ACID transactions, database foreign keys, atomic inventory updates, and the Transactional Outbox pattern. | `reserve_inventory_atomic()` with `FOR UPDATE` row lock; `outbox_events` table for email/fulfillment sync. |
+| **02. External Calls** | Third-party service hangs, stalls server threads, false failure assumptions. | Explicit timeouts (max 6s), circuit breakers with 15s cooldown, graceful degradation, status checks. | `safeFetchWithTimeout()`, non-blocking toast notifications, status reconciliation via Stripe webhooks. |
+| **03. Retries & Duplicates** | User taps Pay twice, network drops and retries create duplicate orders. | Client generates UUID `Idempotency-Key` per intent; server caches result and returns stored record. | Unique constraint on `idempotency_keys(key)`; UI button in-flight disabled with spinner. |
+| **04. Auth & Sessions** | Token reuse after logout, brute-force password stuffing, leaking session IDs. | Server-side session revocation, `HttpOnly` `Secure` `SameSite=Strict` cookies, Argon2id hashing, rate limiting. | Sessions table with explicit revocation upon logout; short-lived access tokens. |
+| **05. Access Control** | IDOR (Insecure Direct Object Reference), modifying hidden fields. | Server-side authorization check on every request, deny-by-default, query scoping by caller ID. | All database queries filtered with `WHERE customer_id = session.customer_id`; admin role checks. |
+| **06. Input & Injection** | SQL injection, XSS via user text, oversized payload denial of service. | Strict server schema validation, parameter binding in SQL/ORM, context-aware HTML escaping. | `escapeHTML()` helper across all templates; parameterized Prisma queries; 80-char search bounds. |
+| **07. Secrets Management** | API keys leaked into client bundles or committed to version control. | Secret keys reside solely in server environment variables; client receives only public tokens. | Git-excluded `.env.local`; separation of `NEXT_PUBLIC_` client tokens from Stripe secret keys. |
+| **08. Personal Data** | PII leaked into log files, error reports, or page query strings. | Data minimization, log sanitization/masking (`m•••l@gmail.com`), no PII in URLs, HTTPS everywhere. | `maskPII()` helper; PII stripped from client analytics; strict HTTPS enforcement. |
+| **09. Logs & Monitoring** | Free-text unstructured logs, missing root cause in microservices. | Structured JSON logs with correlated `requestId`, SRE Golden Signals, error tracker integration. | `appLogger` outputting JSON with `requestId`, `timestamp`, and `version`; Sentry telemetry hooks. |
+| **10. Releases & Rollbacks** | Schema migrations breaking previous code version, unpinned dependencies. | Expand-and-contract schema migrations, committed lockfiles, automated CI tests before deploy. | Pinned lockfiles; zero-downtime DB migrations; automated GitHub Actions CI pipeline. |
+| **11. Backups & Recovery** | Unverified backups, database replica copying corrupted records. | Defined RPO (<5 min) & RTO (<30 min), Point-in-Time Recovery (PITR), scheduled isolated restore drills. | WAL archiving with PITR enabled on PostgreSQL; automated recovery rehearsal checklist. |
+| **12. Load & Capacity** | Traffic spike depletes connection pool, N+1 query loops stall server. | Bounded pagination, database connection pooling (PgBouncer), asynchronous background queues. | Debounced client input; indexed queries; asynchronous queue worker for order fulfillment. |
+
+---
+
+## 8. Multi-Platform Deployment Architecture
+
+### 8.1 GitHub Pages Deployment
+- **Method:** Automated deployment via GitHub Actions workflow [`.github/workflows/deploy-pages.yml`](file:///home/meghraj-dhakal/Promt_Wars/.github/workflows/deploy-pages.yml).
+- **Static Artifact:** Deploys root `index.html` with `.nojekyll` to disable Jekyll processing.
+- **Routing Strategy:** Hash-based navigation (`#home`, `#accessories`, `#wishlist`, `#cart`) preventing 404 errors on GitHub Pages subfolder environments (`https://<username>.github.io/<repo>/`).
+
+### 8.2 Vercel Deployment
+- **Method:** Zero-configuration git-integrated Vercel deployment with [`vercel.json`](file:///home/meghraj-dhakal/Promt_Wars/vercel.json).
+- **Security Headers:** Strict CSP, HSTS (`max-age=63072000`), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`.
+- **Edge Routing:** Clean URL rewrites routing `/category/accessories` and `/wishlist` directly to the resilient application shell.

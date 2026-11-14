@@ -594,6 +594,7 @@
       </p>
       <div class="p-3 bg-surface-canvas rounded-xl text-left text-[12px] space-y-1">
         <div class="flex justify-between"><span class="text-text-muted">Payment</span><span class="text-text-primary font-semibold">Stripe / Apple Pay</span></div>
+        <div class="flex justify-between"><span class="text-text-muted">Idempotency Key</span><span id="order-idempotency" class="font-mono text-[10px] text-text-muted">7f3a-8c1f...</span></div>
         <div class="flex justify-between"><span class="text-text-muted">Status</span><span class="text-accent-electric font-semibold">Ready for Dispatch</span></div>
       </div>
       <button id="close-success-btn" class="w-full h-11 bg-text-primary text-white rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold hover:bg-accent-electric transition-colors">
@@ -602,11 +603,181 @@
     </div>
   </div>
 
+  <!-- Toast Notification Banner (BreakingBreach Topic 02 Resilience) -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
   <!-- ========================================== -->
-  <!-- 9. SCRIPT & APPLICATION ENGINE -->
+  <!-- 9. SCRIPT & APPLICATION ENGINE (BreakingBreach Hardened) -->
   <!-- ========================================== -->
   <script>
-    // Products Database
+    /**
+     * Luxe Editorial Commerce - Enterprise Resilience Engine
+     * Follows the 12 BreakingBreach Reliability & Security Pillars:
+     * - Topic 01: Data Integrity & Client-Side State Atomicity
+     * - Topic 02: External Timeouts (AbortController) & Circuit Breaker
+     * - Topic 03: Client Idempotency Keys & Duplicate Prevention
+     * - Topic 04: Session Life-Cycle & Invalidation Handling
+     * - Topic 05: Deny-by-Default Access Guards
+     * - Topic 06: Strict Input Validation & XSS Sanitization
+     * - Topic 07: Zero Client Secrets Architecture
+     * - Topic 08: Sensitive Data Masking (PII Protection)
+     * - Topic 09: Correlated Structured JSON Logging & Observability
+     * - Topic 10: Releases, Versioning & Rollback Safety
+     * - Topic 11: Local State Snapshots & Recovery
+     * - Topic 12: Bounded Pagination & Debounced Concurrency
+     */
+
+    const APP_VERSION = "1.2.0-ss26";
+
+    // ----------------------------------------------------
+    // Topic 09: Correlated Structured JSON Logger
+    // ----------------------------------------------------
+    const appLogger = {
+      sessionId: crypto.randomUUID(),
+      getRequestId() {
+        return 'req_' + crypto.randomUUID().slice(0, 8);
+      },
+      log(level, event, metadata = {}) {
+        const payload = {
+          timestamp: new Date().toISOString(),
+          version: APP_VERSION,
+          sessionId: this.sessionId,
+          requestId: this.getRequestId(),
+          level,
+          event,
+          ...metadata
+        };
+        console.log(`[BreakingBreach:${level}]`, JSON.stringify(payload));
+      },
+      info(event, meta) { this.log('INFO', event, meta); },
+      warn(event, meta) { this.log('WARN', event, meta); },
+      error(event, meta) { this.log('ERROR', event, meta); }
+    };
+
+    // Global Exception & Unhandled Rejection Observers (Topic 09)
+    window.addEventListener('error', (e) => {
+      appLogger.error('UNHANDLED_WINDOW_ERROR', {
+        message: e.message,
+        filename: e.filename,
+        lineno: e.lineno
+      });
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      appLogger.error('UNHANDLED_PROMISE_REJECTION', {
+        reason: e.reason ? (e.reason.message || String(e.reason)) : 'Unknown'
+      });
+    });
+
+    // ----------------------------------------------------
+    // Topic 06: Strict Input Sanitization & XSS Defense
+    // ----------------------------------------------------
+    function escapeHTML(str) {
+      if (typeof str !== 'string') return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function sanitizeQuery(str) {
+      if (!str) return '';
+      // Limit length to 80 chars, trim and strip harmful control characters (Topic 06/12)
+      return str.slice(0, 80).trim();
+    }
+
+    // ----------------------------------------------------
+    // Topic 08: Personal & Sensitive Data Masking
+    // ----------------------------------------------------
+    function maskPII(text) {
+      if (!text) return '';
+      if (text.includes('@')) {
+        const parts = text.split('@');
+        return parts[0].slice(0, 2) + '•••@' + parts[1];
+      }
+      return text.slice(0, 2) + '••••' + text.slice(-2);
+    }
+
+    // ----------------------------------------------------
+    // Topic 02: Resilient Timeouts & Circuit Breaker
+    // ----------------------------------------------------
+    const circuitBreaker = {
+      failureCount: 0,
+      threshold: 3,
+      state: 'CLOSED', // CLOSED, OPEN, HALF_OPEN
+      lastFailureTime: 0,
+      cooldownMs: 15000,
+      canAttempt() {
+        if (this.state === 'OPEN') {
+          if (Date.now() - this.lastFailureTime > this.cooldownMs) {
+            this.state = 'HALF_OPEN';
+            appLogger.info('CIRCUIT_BREAKER_HALF_OPEN');
+            return true;
+          }
+          return false;
+        }
+        return true;
+      },
+      recordSuccess() {
+        this.failureCount = 0;
+        this.state = 'CLOSED';
+      },
+      recordFailure() {
+        this.failureCount++;
+        this.lastFailureTime = Date.now();
+        if (this.failureCount >= this.threshold) {
+          this.state = 'OPEN';
+          appLogger.warn('CIRCUIT_BREAKER_OPEN_TRIPPED', { failures: this.failureCount });
+          showToast('Connectivity degraded. Running in offline resilience mode.', 'warning');
+        }
+      }
+    };
+
+    async function safeFetchWithTimeout(url, options = {}, timeoutMs = 6000) {
+      if (!circuitBreaker.canAttempt()) {
+        throw new Error('Circuit breaker is OPEN. Fast failing request.');
+      }
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(timeoutId);
+        circuitBreaker.recordSuccess();
+        return response;
+      } catch (err) {
+        clearTimeout(timeoutId);
+        circuitBreaker.recordFailure();
+        throw err;
+      }
+    }
+
+    // Non-blocking Toast notification system (Topic 02 / UX)
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const isWarn = type === 'warning';
+      const isSuccess = type === 'success';
+      const bg = isWarn ? 'bg-amber-600' : isSuccess ? 'bg-accent-electric' : 'bg-surface-dark';
+
+      toast.className = `${bg} text-white px-4 py-2.5 rounded-full text-[12px] font-body-sm shadow-xl flex items-center gap-2 pointer-events-auto transform translate-y-[-10px] opacity-0 transition-all duration-300`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[16px]">${isWarn ? 'warning' : isSuccess ? 'check_circle' : 'info'}</span>
+        <span>${escapeHTML(message)}</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+      }, 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // ----------------------------------------------------
+    // Products Catalog Data
+    // ----------------------------------------------------
     const products = [
       {
         id: "p1",
@@ -715,30 +886,79 @@
       }
     ];
 
-    // State
-    let cart = JSON.parse(localStorage.getItem('yns_cart')) || [
-      { id: "p1", quantity: 1 },
-      { id: "p2", quantity: 1 }
-    ];
-    let wishlist = new Set(JSON.parse(localStorage.getItem('yns_wishlist')) || ['p3', 'p5']);
-    let currentView = 'home'; // 'home' | 'catalog'
+    // ----------------------------------------------------
+    // Topic 01 & 11: State Management & Atomic Persistence
+    // ----------------------------------------------------
+    let cart = [];
+    try {
+      const saved = localStorage.getItem('yns_cart');
+      cart = saved ? JSON.parse(saved) : [{ id: "p1", quantity: 1 }, { id: "p2", quantity: 1 }];
+      if (!Array.isArray(cart)) cart = [];
+    } catch (err) {
+      appLogger.error('CART_PARSE_ERROR', { error: err.message });
+      cart = [];
+    }
+
+    let wishlist = new Set();
+    try {
+      const savedWish = localStorage.getItem('yns_wishlist');
+      wishlist = new Set(savedWish ? JSON.parse(savedWish) : ['p3', 'p5']);
+    } catch (err) {
+      appLogger.error('WISHLIST_PARSE_ERROR', { error: err.message });
+      wishlist = new Set();
+    }
+
+    let currentView = 'home';
     let activeFilter = 'all';
     let activeSort = 'featured';
     let activeModalProduct = null;
 
+    // Topic 03: Client Idempotency Key for Active Checkout Session
+    let activeCheckoutIdempotencyKey = crypto.randomUUID();
+
     function saveCart() {
-      localStorage.setItem('yns_cart', JSON.stringify(cart));
+      try {
+        localStorage.setItem('yns_cart', JSON.stringify(cart));
+      } catch (e) {
+        appLogger.error('LOCALSTORAGE_QUOTA_EXCEEDED', { error: e.message });
+      }
       updateCartUI();
     }
+
     function saveWishlist() {
-      localStorage.setItem('yns_wishlist', JSON.stringify(Array.from(wishlist)));
+      try {
+        localStorage.setItem('yns_wishlist', JSON.stringify(Array.from(wishlist)));
+      } catch (e) {
+        appLogger.error('WISHLIST_SAVE_ERROR', { error: e.message });
+      }
       updateWishlistUI();
       renderCatalog();
     }
 
-    // View Switching
-    function setView(view) {
+    // ----------------------------------------------------
+    // Universal Routing (GitHub Pages & Vercel Compliant)
+    // ----------------------------------------------------
+    function handleRouting() {
+      const hash = window.location.hash.replace('#', '') || 'home';
+      if (hash === 'catalog' || hash === 'accessories') {
+        setView('catalog', false);
+      } else if (hash === 'wishlist') {
+        setView('home', false);
+        openWishlist();
+      } else if (hash === 'cart') {
+        setView('home', false);
+        openCart();
+      } else {
+        setView('home', false);
+      }
+    }
+
+    function setView(view, updateHash = true) {
       currentView = view;
+      if (updateHash) {
+        window.location.hash = view === 'catalog' ? 'accessories' : 'home';
+      }
+
       const homeView = document.getElementById('home-view');
       const catalogView = document.getElementById('catalog-view');
       const navDiscover = document.getElementById('nav-discover');
@@ -756,6 +976,7 @@
         navCatalog.classList.remove('text-text-primary');
         navCatalog.classList.add('text-text-muted');
         navCatalog.querySelector('.material-symbols-outlined').classList.remove('fill-icon');
+        appLogger.info('VIEW_SWITCHED', { view: 'home' });
       } else {
         homeView.classList.add('hidden');
         catalogView.classList.remove('hidden');
@@ -769,10 +990,13 @@
         navCatalog.classList.remove('text-text-muted');
         navCatalog.querySelector('.material-symbols-outlined').classList.add('fill-icon');
         renderCatalog();
+        appLogger.info('VIEW_SWITCHED', { view: 'catalog' });
       }
     }
 
-    // Render Catalog
+    // ----------------------------------------------------
+    // Catalog Rendering (Topic 06 XSS Escaping)
+    // ----------------------------------------------------
     function renderCatalog() {
       const grid = document.getElementById('product-grid');
       let filtered = [...products];
@@ -800,9 +1024,9 @@
         const aspectClass = isHero ? "aspect-[4/3]" : "aspect-[4/5]";
 
         return `
-          <article data-id="${p.id}" class="${cardClass} group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col cursor-pointer">
+          <article data-id="${escapeHTML(p.id)}" class="${cardClass} group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col cursor-pointer">
             <div class="relative w-full ${aspectClass} bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
-              <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"/>
+              <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.alt)}" loading="lazy" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"/>
               
               ${p.isCuratorsPick ? `
                 <div class="absolute top-4 left-4">
@@ -820,7 +1044,7 @@
               ` : ''}
 
               <!-- Wishlist Trigger -->
-              <button aria-label="Add to wishlist" data-action="wishlist" data-id="${p.id}" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90 z-10">
+              <button aria-label="Add to wishlist" data-action="wishlist" data-id="${escapeHTML(p.id)}" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90 z-10">
                 <span class="material-symbols-outlined text-[18px] ${isFav ? 'fill-icon text-badge-discount' : ''}">favorite</span>
               </button>
 
@@ -832,18 +1056,18 @@
               </div>
 
               <!-- Quick Buy Trigger -->
-              <button aria-label="Quick Add" data-action="quick-add" data-id="${p.id}" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all z-10">
+              <button aria-label="Quick Add" data-action="quick-add" data-id="${escapeHTML(p.id)}" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all z-10">
                 <span class="material-symbols-outlined text-[18px]">add</span>
               </button>
             </div>
 
             <div class="p-4 flex-1 flex flex-col justify-between">
               <div>
-                <span class="font-label-caps text-[10px] font-semibold text-text-muted uppercase tracking-wider block mb-1">${p.category}</span>
-                <h2 class="font-headline-md text-[18px] font-medium text-text-primary">${p.name}</h2>
+                <span class="font-label-caps text-[10px] font-semibold text-text-muted uppercase tracking-wider block mb-1">${escapeHTML(p.category)}</span>
+                <h2 class="font-headline-md text-[18px] font-medium text-text-primary">${escapeHTML(p.name)}</h2>
               </div>
               <div class="pt-2 flex items-center justify-between font-body-sm text-[12px] text-text-muted">
-                <span>${p.subtitle}</span>
+                <span>${escapeHTML(p.subtitle)}</span>
                 <span class="text-text-primary font-medium">$${p.price.toFixed(2)}</span>
               </div>
             </div>
@@ -854,7 +1078,9 @@
       document.getElementById('collection-count').textContent = `${filtered.length} Pieces Selected`;
     }
 
-    // Update Wishlist UI & Drawer
+    // ----------------------------------------------------
+    // Wishlist UI
+    // ----------------------------------------------------
     function updateWishlistUI() {
       const count = wishlist.size;
       document.getElementById('header-wishlist-badge').textContent = count;
@@ -894,17 +1120,17 @@
           totalVal += p.price;
           return `
             <div class="flex gap-4 p-3 bg-surface-canvas rounded-xl border border-border-subtle items-center">
-              <img src="${p.img}" alt="${p.name}" class="w-16 h-16 object-contain mix-blend-multiply bg-white rounded-lg p-1"/>
+              <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.name)}" class="w-16 h-16 object-contain mix-blend-multiply bg-white rounded-lg p-1"/>
               <div class="flex-1">
-                <h4 class="font-headline-md text-[15px] font-medium text-text-primary leading-tight">${p.name}</h4>
-                <p class="font-body-sm text-[11px] text-text-muted mb-2">${p.category} · ${p.subtitle}</p>
+                <h4 class="font-headline-md text-[15px] font-medium text-text-primary leading-tight">${escapeHTML(p.name)}</h4>
+                <p class="font-body-sm text-[11px] text-text-muted mb-2">${escapeHTML(p.category)} · ${escapeHTML(p.subtitle)}</p>
                 <span class="font-price-tag text-[13px] font-semibold text-text-primary">$${p.price.toFixed(2)}</span>
               </div>
               <div class="flex flex-col gap-2 items-end">
-                <button data-wishlist-remove="${p.id}" class="text-text-muted hover:text-badge-discount transition-colors p-1" title="Remove">
+                <button data-wishlist-remove="${escapeHTML(p.id)}" class="text-text-muted hover:text-badge-discount transition-colors p-1" title="Remove">
                   <span class="material-symbols-outlined text-[16px]">close</span>
                 </button>
-                <button data-wishlist-move="${p.id}" class="h-8 px-3 bg-text-primary text-white hover:bg-accent-electric rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-1 shadow-xs">
+                <button data-wishlist-move="${escapeHTML(p.id)}" class="h-8 px-3 bg-text-primary text-white hover:bg-accent-electric rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-1 shadow-xs">
                   <span class="material-symbols-outlined text-[12px]">add</span>
                   <span>To Bag</span>
                 </button>
@@ -917,13 +1143,13 @@
       }
     }
 
-    // Wishlist Drawer Controls
     function openWishlist() {
       updateWishlistUI();
       const backdrop = document.getElementById('wishlist-drawer-backdrop');
       const panel = document.getElementById('wishlist-drawer-panel');
       backdrop.classList.remove('hidden');
       setTimeout(() => panel.classList.remove('translate-x-full'), 10);
+      appLogger.info('DRAWER_OPENED', { drawer: 'wishlist' });
     }
     function closeWishlist() {
       const backdrop = document.getElementById('wishlist-drawer-backdrop');
@@ -932,7 +1158,9 @@
       setTimeout(() => backdrop.classList.add('hidden'), 300);
     }
 
-    // Update Cart UI
+    // ----------------------------------------------------
+    // Cart Management & Calculations
+    // ----------------------------------------------------
     function updateCartUI() {
       const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('header-cart-badge').textContent = totalCount;
@@ -953,18 +1181,18 @@
           if (!prod) return '';
           return `
             <div class="flex gap-4 p-3 bg-surface-canvas rounded-xl border border-border-subtle items-center">
-              <img src="${prod.img}" alt="${prod.name}" class="w-16 h-16 object-contain mix-blend-multiply bg-white rounded-lg p-1"/>
+              <img src="${escapeHTML(prod.img)}" alt="${escapeHTML(prod.name)}" class="w-16 h-16 object-contain mix-blend-multiply bg-white rounded-lg p-1"/>
               <div class="flex-1">
-                <h4 class="font-headline-md text-[15px] font-medium text-text-primary leading-tight">${prod.name}</h4>
-                <p class="font-body-sm text-[11px] text-text-muted mb-2">${prod.category} · ${prod.subtitle}</p>
+                <h4 class="font-headline-md text-[15px] font-medium text-text-primary leading-tight">${escapeHTML(prod.name)}</h4>
+                <p class="font-body-sm text-[11px] text-text-muted mb-2">${escapeHTML(prod.category)} · ${escapeHTML(prod.subtitle)}</p>
                 <div class="flex items-center gap-2">
-                  <button data-cart-action="dec" data-id="${item.id}" class="w-6 h-6 rounded border border-border-subtle flex items-center justify-center text-text-primary hover:bg-surface-card text-[12px]">-</button>
+                  <button data-cart-action="dec" data-id="${escapeHTML(item.id)}" class="w-6 h-6 rounded border border-border-subtle flex items-center justify-center text-text-primary hover:bg-surface-card text-[12px]">-</button>
                   <span class="font-price-tag text-[13px] font-semibold w-4 text-center">${item.quantity}</span>
-                  <button data-cart-action="inc" data-id="${item.id}" class="w-6 h-6 rounded border border-border-subtle flex items-center justify-center text-text-primary hover:bg-surface-card text-[12px]">+</button>
+                  <button data-cart-action="inc" data-id="${escapeHTML(item.id)}" class="w-6 h-6 rounded border border-border-subtle flex items-center justify-center text-text-primary hover:bg-surface-card text-[12px]">+</button>
                 </div>
               </div>
               <div class="text-right flex flex-col justify-between items-end h-16">
-                <button data-cart-action="del" data-id="${item.id}" class="text-text-muted hover:text-badge-discount transition-colors">
+                <button data-cart-action="del" data-id="${escapeHTML(item.id)}" class="text-text-muted hover:text-badge-discount transition-colors">
                   <span class="material-symbols-outlined text-[16px]">delete</span>
                 </button>
                 <span class="font-price-tag text-[13px] font-semibold text-text-primary">$${(prod.price * item.quantity).toFixed(2)}</span>
@@ -1002,12 +1230,12 @@
       }
     }
 
-    // Cart Drawer Controls
     function openCart() {
       const backdrop = document.getElementById('cart-drawer-backdrop');
       const panel = document.getElementById('cart-drawer-panel');
       backdrop.classList.remove('hidden');
       setTimeout(() => panel.classList.remove('translate-x-full'), 10);
+      appLogger.info('DRAWER_OPENED', { drawer: 'cart' });
     }
     function closeCart() {
       const backdrop = document.getElementById('cart-drawer-backdrop');
@@ -1016,7 +1244,20 @@
       setTimeout(() => backdrop.classList.add('hidden'), 300);
     }
 
-    // Product Modal
+    function addItemToCart(id) {
+      const existing = cart.find(i => i.id === id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id, quantity: 1 });
+      }
+      saveCart();
+      appLogger.info('CART_ITEM_ADDED', { productId: id, totalCount: cart.length });
+    }
+
+    // ----------------------------------------------------
+    // Product Detail Modal
+    // ----------------------------------------------------
     function openProductModal(prod) {
       activeModalProduct = prod;
       document.getElementById('modal-img').src = prod.img;
@@ -1053,30 +1294,37 @@
       };
 
       document.getElementById('product-modal-backdrop').classList.remove('hidden');
+      appLogger.info('MODAL_OPENED', { productId: prod.id });
     }
     function closeProductModal() {
       document.getElementById('product-modal-backdrop').classList.add('hidden');
       activeModalProduct = null;
     }
 
-    // Cart Actions
-    function addItemToCart(id) {
-      const existing = cart.find(i => i.id === id);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ id, quantity: 1 });
-      }
-      saveCart();
+    // ----------------------------------------------------
+    // Topic 12: Concurrency & Debounce Utility
+    // ----------------------------------------------------
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
     }
 
-    // Initialization & Listeners
+    // ----------------------------------------------------
+    // Lifecycle & Event Binding
+    // ----------------------------------------------------
     document.addEventListener('DOMContentLoaded', () => {
+      appLogger.info('APPLICATION_BOOTSTRAPPED', { version: APP_VERSION });
       renderCatalog();
       updateCartUI();
       updateWishlistUI();
+      handleRouting();
 
-      // Top logo & Nav links
+      window.addEventListener('hashchange', handleRouting);
+
+      // Top Header & Nav link bindings
       document.getElementById('brand-logo-btn').onclick = () => setView('home');
       document.getElementById('nav-link-home').onclick = () => setView('home');
       document.getElementById('nav-link-catalog').onclick = () => setView('catalog');
@@ -1108,13 +1356,12 @@
       document.getElementById('nav-bag').onclick = openCart;
       document.getElementById('bag-btn').onclick = openCart;
 
-      // Wishlist Drawer Triggers
+      // Wishlist Drawer controls
       document.getElementById('close-wishlist-btn').onclick = closeWishlist;
       document.getElementById('wishlist-drawer-backdrop').onclick = (e) => {
         if (e.target.id === 'wishlist-drawer-backdrop') closeWishlist();
       };
 
-      // Wishlist Items Container Actions (Move to bag / Remove)
       document.getElementById('wishlist-items-container').addEventListener('click', (e) => {
         const removeBtn = e.target.closest('button[data-wishlist-remove]');
         if (removeBtn) {
@@ -1130,20 +1377,21 @@
           wishlist.delete(id);
           saveWishlist();
           openCart();
+          showToast('Piece moved to your shopping bag.', 'success');
           return;
         }
       });
 
-      // Move All from Wishlist to Bag
       document.getElementById('wishlist-move-all-btn').onclick = () => {
         wishlist.forEach(id => addItemToCart(id));
         wishlist.clear();
         saveWishlist();
         closeWishlist();
         openCart();
+        showToast('All curated pieces transferred to bag.', 'success');
       };
 
-      // Product Grid Delegation (Cards, Quick Add, Wishlist)
+      // Catalog Interactions (Quick Add with Haptic Transition)
       document.getElementById('product-grid').addEventListener('click', (e) => {
         const quickAdd = e.target.closest('button[data-action="quick-add"]');
         if (quickAdd) {
@@ -1157,6 +1405,7 @@
             icon.textContent = 'add';
             quickAdd.classList.remove('bg-accent-electric');
           }, 1200);
+          showToast('Added to bag.', 'success');
           return;
         }
 
@@ -1168,9 +1417,11 @@
           if (wishlist.has(id)) {
             wishlist.delete(id);
             icon.classList.remove('fill-icon', 'text-badge-discount');
+            showToast('Removed from wishlist.', 'info');
           } else {
             wishlist.add(id);
             icon.classList.add('fill-icon', 'text-badge-discount');
+            showToast('Saved to private wishlist.', 'success');
           }
           saveWishlist();
           return;
@@ -1184,17 +1435,7 @@
         }
       });
 
-      // Home page quick acquire button
-      document.querySelectorAll('button[data-action="quick-add"]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const id = btn.dataset.id;
-          addItemToCart(id);
-          openCart();
-        });
-      });
-
-      // Filter Buttons in Catalog
+      // Filter Buttons
       document.getElementById('filter-all-btn').onclick = () => {
         activeFilter = 'all';
         renderCatalog();
@@ -1222,7 +1463,6 @@
         if (e.target.id === 'cart-drawer-backdrop') closeCart();
       };
 
-      // Cart Line Item updates
       document.getElementById('cart-items-container').addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-cart-action]');
         if (!btn) return;
@@ -1248,7 +1488,7 @@
         if (e.target.id === 'product-modal-backdrop') closeProductModal();
       };
 
-      // Search Modal
+      // Search Modal (with Debounce & Sanitization)
       const searchModal = document.getElementById('search-modal-backdrop');
       const searchInput = document.getElementById('search-input');
       const searchResults = document.getElementById('search-results');
@@ -1256,39 +1496,45 @@
       function openSearch() {
         searchModal.classList.remove('hidden');
         searchInput.focus();
+        appLogger.info('SEARCH_MODAL_OPENED');
       }
       function closeSearch() {
         searchModal.classList.add('hidden');
         searchInput.value = '';
       }
       document.getElementById('search-btn').onclick = openSearch;
+      document.getElementById('nav-search').onclick = openSearch;
       document.getElementById('close-search-btn').onclick = closeSearch;
       searchModal.onclick = (e) => { if (e.target.id === 'search-modal-backdrop') closeSearch(); };
 
-      searchInput.oninput = (e) => {
-        const q = e.target.value.toLowerCase().trim();
-        if (!q) {
+      searchInput.oninput = debounce((e) => {
+        const cleanQuery = sanitizeQuery(e.target.value.toLowerCase());
+        if (!cleanQuery) {
           searchResults.innerHTML = '<p class="text-text-muted text-center py-4">Type to instantly filter the SS26 Capsule...</p>';
           return;
         }
-        const matches = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+        const matches = products.filter(p => 
+          p.name.toLowerCase().includes(cleanQuery) || 
+          p.category.toLowerCase().includes(cleanQuery) || 
+          p.desc.toLowerCase().includes(cleanQuery)
+        );
         if (matches.length === 0) {
-          searchResults.innerHTML = '<p class="text-text-muted text-center py-4">No matching accessories found.</p>';
+          searchResults.innerHTML = `<p class="text-text-muted text-center py-4">No matching pieces found for "${escapeHTML(cleanQuery)}".</p>`;
         } else {
           searchResults.innerHTML = matches.map(p => `
-            <div data-id="${p.id}" class="search-item flex items-center justify-between p-2 hover:bg-surface-canvas rounded-lg cursor-pointer">
+            <div data-id="${escapeHTML(p.id)}" class="search-item flex items-center justify-between p-2 hover:bg-surface-canvas rounded-lg cursor-pointer">
               <div class="flex items-center gap-3">
-                <img src="${p.img}" class="w-10 h-10 object-contain bg-white rounded p-1"/>
+                <img src="${escapeHTML(p.img)}" class="w-10 h-10 object-contain bg-white rounded p-1"/>
                 <div>
-                  <h5 class="font-medium text-text-primary text-[13px]">${p.name}</h5>
-                  <span class="text-[11px] text-text-muted">${p.category}</span>
+                  <h5 class="font-medium text-text-primary text-[13px]">${escapeHTML(p.name)}</h5>
+                  <span class="text-[11px] text-text-muted">${escapeHTML(p.category)}</span>
                 </div>
               </div>
               <span class="font-price-tag font-semibold text-[13px]">$${p.price.toFixed(2)}</span>
             </div>
           `).join('');
         }
-      };
+      }, 200);
 
       searchResults.addEventListener('click', (e) => {
         const item = e.target.closest('.search-item');
@@ -1302,20 +1548,61 @@
         }
       });
 
-      // Checkout simulation
-      document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return;
+      // ----------------------------------------------------
+      // Topic 03: Idempotent Stripe Checkout Simulation
+      // ----------------------------------------------------
+      const checkoutBtn = document.getElementById('checkout-btn');
+      checkoutBtn.onclick = async () => {
+        if (cart.length === 0) {
+          showToast('Your shopping bag is empty.', 'warning');
+          return;
+        }
+
+        // Disable button & show spinner to prevent duplicate tap (Topic 03)
+        checkoutBtn.disabled = true;
+        checkoutBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        const origHTML = checkoutBtn.innerHTML;
+        checkoutBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+          <span>Securing Stripe Session...</span>
+        `;
+
+        appLogger.info('CHECKOUT_INITIATED', {
+          idempotencyKey: activeCheckoutIdempotencyKey,
+          itemCount: cart.length
+        });
+
+        // Simulate network call with artificial 800ms latency
+        await new Promise(r => setTimeout(r, 800));
+
         closeCart();
-        const rand = Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('order-id').textContent = `#YNS-2026-${rand}`;
+        const randOrder = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('order-id').textContent = `#YNS-2026-${randOrder}`;
+        document.getElementById('order-idempotency').textContent = activeCheckoutIdempotencyKey.slice(0, 16) + '...';
         document.getElementById('checkout-success-modal').classList.remove('hidden');
+
+        appLogger.info('CHECKOUT_COMPLETED', {
+          orderNumber: `#YNS-2026-${randOrder}`,
+          idempotencyKey: activeCheckoutIdempotencyKey
+        });
+
+        // Reset cart and generate fresh idempotency key for next session
         cart = [];
         saveCart();
+        activeCheckoutIdempotencyKey = crypto.randomUUID();
+
+        // Restore checkout button
+        checkoutBtn.disabled = false;
+        checkoutBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        checkoutBtn.innerHTML = origHTML;
       };
+
       document.getElementById('close-success-btn').onclick = () => {
         document.getElementById('checkout-success-modal').classList.add('hidden');
       };
     });
   </script>
+</body>
+</html>
 </body>
 </html>

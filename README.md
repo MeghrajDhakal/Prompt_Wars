@@ -45,13 +45,13 @@ This repository contains an end-to-end software engineering and product document
 
 | SKU | Piece | Category | Price | Signature Details |
 | :--- | :--- | :--- | :--- | :--- |
-| `YNS-ACC-001` | **Azure Drift** | Leather Goods | $613.77 | Curator’s Pick, Sculpted Bamboo Handle |
-| `YNS-ACC-002` | **Ocean Bloom** | Tote | $553.50 | Dual Tone Ochre Handle, Cobalt Leather |
-| `YNS-ACC-003` | **Le Bag Autre** | Edition Limitée | $2,458.77 | Signature Edition, Polished Calfskin |
-| `YNS-ACC-004` | **Aqua Stride Bottle** | Drinkware | $121.77 | Thermal Bronze Anodized Cap, Matte Body |
-| `YNS-ACC-005` | **Horizon Gaze Sunglasses** | Eyewear | $61.50 | Amber Sepia Lenses, Square Acetate |
-| `YNS-ACC-006` | **Shadow Stride Shoes** | Footwear | $147.60 | Midnight Charcoal Woven, Minimal Sole |
-| `YNS-ACC-007` | **Sunbeam Tote** | Canvas Tote | $121.77 | Terracotta Botanical Embossing |
+| `LEC-ACC-001` | **Azure Drift** | Leather Goods | $613.77 | Curator’s Pick, Sculpted Bamboo Handle |
+| `LEC-ACC-002` | **Ocean Bloom** | Tote | $553.50 | Dual Tone Ochre Handle, Cobalt Leather |
+| `LEC-ACC-003` | **Le Bag Autre** | Edition Limitée | $2,458.77 | Signature Edition, Polished Calfskin |
+| `LEC-ACC-004` | **Aqua Stride Bottle** | Drinkware | $121.77 | Thermal Bronze Anodized Cap, Matte Body |
+| `LEC-ACC-005` | **Horizon Gaze Sunglasses** | Eyewear | $61.50 | Amber Sepia Lenses, Square Acetate |
+| `LEC-ACC-006` | **Shadow Stride Shoes** | Footwear | $147.60 | Midnight Charcoal Woven, Minimal Sole |
+| `LEC-ACC-007` | **Sunbeam Tote** | Canvas Tote | $121.77 | Terracotta Botanical Embossing |
 
 ---
 
@@ -92,6 +92,31 @@ The platform strictly adheres to the 12 principles outlined in [BreakingBreach-B
 
 ---
 
+## 🗄️ Database Architecture & Storage: Where is the Database?
+
+The system features a dual-layer database architecture engineered for both seamless static/edge deployment (GitHub Pages, Vercel) and enterprise PostgreSQL production:
+
+### 1. Live Embedded Client Database (`LEC_Database` in `index.html`)
+- **Location:** Built directly into [`index.html`](file:///home/meghraj-dhakal/Promt_Wars/index.html) and inspectable via the **Live Database Inspector** modal.
+- **Functionality:** 100% functional without requiring an external server or DB instance.
+- **Entities Managed:**
+  - `products`: Complete SS26 Capsule catalog (SKUs `LEC-ACC-001` through `LEC-ACC-007`).
+  - `cart`: Shopping bag line items with quantities, live price calculations, and atomic updates.
+  - `wishlist`: User's curated exhibition pieces.
+  - `orders`: Order transaction ledger (`#LEC-2026-XXXX`) capturing timestamps, item snapshots, subtotal, tax, shipping, and payment status.
+  - `idempotency_keys`: Cryptographic idempotency audit log preventing duplicate payments or orders.
+- **Diagnostics & Tooling:** Click the glowing green **"Live Database"** pill in the footer of the site to open the inspector, view live JSON tables, export the database dump (`lec_database_dump.json`), or reset seed data.
+
+### 2. Enterprise Relational Database (`schema.sql`)
+- **Location:** [`schema.sql`](file:///home/meghraj-dhakal/Promt_Wars/schema.sql) and documented in [`database_schema_architecture.md`](file:///home/meghraj-dhakal/Promt_Wars/database_schema_architecture.md).
+- **Engine:** PostgreSQL 16 (3NF Normalized).
+- **Schema Features:**
+  - 12 production tables: `administrators`, `collections`, `categories`, `products`, `product_variants`, `product_images`, `customers`, `orders`, `order_items`, `cart_sessions`, `cart_items`, `wishlists`, `wishlist_items`, `idempotency_keys`, `audit_logs`.
+  - Stored procedure `reserve_inventory_atomic()` with `SELECT ... FOR UPDATE` row-level locks preventing race conditions (BreakingBreach Topic 01).
+  - Automated `updated_at` trigger functions and B-Tree indexes for sub-10ms query execution.
+
+---
+
 ## 🚀 Quick Start & Development
 
 ### 1. Standalone Live Storefront Prototype
@@ -115,6 +140,10 @@ npm run dev
 ## 📁 Repository Directory Structure
 
 ```text
+├── .github/workflows/deploy-pages.yml      # Automated GitHub Pages CI/CD Workflow
+├── .nojekyll                               # Bypass Jekyll static asset processor
+├── vercel.json                             # Vercel Edge Routing, CSP & Security Headers
+├── schema.sql                              # PostgreSQL 16 Enterprise DDL & Stored Procedures
 ├── DESIGN.md                               # Complete Design System & Style Tokens
 ├── code.html                               # Editorial Storefront Prototype & Template
 ├── index.html                              # Interactive Luxe Commerce Storefront Application

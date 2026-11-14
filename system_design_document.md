@@ -167,7 +167,7 @@ Retrieves filtered and sorted product catalog.
   "data": [
     {
       "id": "prod_01JAZZ...",
-      "sku": "YNS-ACC-001",
+      "sku": "LEC-ACC-001",
       "name": "Azure Drift",
       "category": "Leather Goods",
       "price": 613.77,

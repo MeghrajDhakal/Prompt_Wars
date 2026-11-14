@@ -72,7 +72,7 @@ flowchart TD
   - Highlights *Artisanal Provenance* (Florence & Milan master tanneries), *Frictionless Commerce* (instant Stripe/Apple Pay/Klarna), and *Carbon Neutral Delivery* (verified carbon offset).
 
 ### 4.2 Header & Top App Bar
-- **Branding**: Left-aligned monogram badge + `"YOUR NEXT STORE"` in uppercase tracked `title-editorial` typography (acts as Home trigger).
+- **Branding**: Left-aligned monogram badge + `"LUXE EDITORIAL COMMERCE"` in uppercase tracked `title-editorial` typography (acts as Home trigger).
 - **Desktop Navigation Links**: Direct navigation to `Home`, `Accessories`, and `SS26 Capsule`.
 - **Navigation Controls**:
   - Drawer menu icon trigger (left).
@@ -123,18 +123,18 @@ The catalog breaks away from monotonous e-commerce grids using calculated editor
 ### 4.5 SS26 Capsule Catalog Roster (Initial Scope)
 | SKU | Product Name | Category | Variant / Material | Price (USD) | Special Badges |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `YNS-ACC-001` | **Azure Drift** | Leather Goods | Bamboo Curved Handle / Sky Blue Calfskin | $613.77 | Curator’s Pick, In Stock |
-| `YNS-ACC-002` | **Ocean Bloom** | Tote | Dual Tone Ochre Handle / Cobalt Leather | $553.50 | - |
-| `YNS-ACC-003` | **Le Bag Autre** | Edition Limitée | Deep Burgundy Polished Calfskin | $2,458.77 | Signature Edition |
-| `YNS-ACC-004` | **Aqua Stride Bottle** | Drinkware | Thermal Bronze Anodized Cap / Dark Matte | $121.77 | Eco Insulation |
-| `YNS-ACC-005` | **Horizon Gaze Sunglasses** | Eyewear | Amber Sepia Lenses / Black Acetate | $61.50 | UV400 Protection |
-| `YNS-ACC-006` | **Shadow Stride Shoes** | Footwear | Midnight Charcoal Woven / Minimal Soles | $147.60 | Ergonomic Cushion |
-| `YNS-ACC-007` | **Sunbeam Tote** | Canvas Tote | Terracotta Botanical Emboss / Tassels | $121.77 | Artisanal Series |
+| `LEC-ACC-001` | **Azure Drift** | Leather Goods | Bamboo Curved Handle / Sky Blue Calfskin | $613.77 | Curator’s Pick, In Stock |
+| `LEC-ACC-002` | **Ocean Bloom** | Tote | Dual Tone Ochre Handle / Cobalt Leather | $553.50 | - |
+| `LEC-ACC-003` | **Le Bag Autre** | Edition Limitée | Deep Burgundy Polished Calfskin | $2,458.77 | Signature Edition |
+| `LEC-ACC-004` | **Aqua Stride Bottle** | Drinkware | Thermal Bronze Anodized Cap / Dark Matte | $121.77 | Eco Insulation |
+| `LEC-ACC-005` | **Horizon Gaze Sunglasses** | Eyewear | Amber Sepia Lenses / Black Acetate | $61.50 | UV400 Protection |
+| `LEC-ACC-006` | **Shadow Stride Shoes** | Footwear | Midnight Charcoal Woven / Minimal Soles | $147.60 | Ergonomic Cushion |
+| `LEC-ACC-007` | **Sunbeam Tote** | Canvas Tote | Terracotta Botanical Emboss / Tassels | $121.77 | Artisanal Series |
 
 ### 4.6 Brand Manifesto Banner
 - Full-width dark exhibition panel (`#121214`) with architectural ambient concentric arcs.
 - Manifesto quote: *“Online commerce should be fast, simple, and modern.”*
-- Social channels (X/Twitter, LinkedIn) and verified badge (*“Made with YNS”*).
+- Social channels (X/Twitter, LinkedIn) and verified badge (*“Made with LEC”*).
 
 ### 4.7 Sliding Cart Drawer & Quick Buy Flow
 - **Slide-Over Panel**: Smooth sliding drawer from the right on desktop, bottom sheet on mobile.

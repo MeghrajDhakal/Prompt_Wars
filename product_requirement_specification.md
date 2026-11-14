@@ -36,13 +36,16 @@
 
 ```mermaid
 flowchart TD
-    A[Visitor Enters Storefront] --> B[Editorial Hero: SS26 Capsule]
-    B --> C[Horizontal Filter Bar]
-    C -->|Filter by Color/Price/Category| D[Asymmetric Exhibition Grid]
-    D -->|Tap Wishlist Heart| E[Save to Local Wishlist]
-    D -->|Tap Quick Buy '+'| F[Add Item Directly to Bag]
-    D -->|Tap Product Card| G[Product Detail Drawer]
+    A[Visitor Enters Storefront] --> B[Home Page: SS26 Exhibition Release]
+    B -->|Explore SS26 Capsule| C[Accessories Catalog Exhibition]
+    B -->|Click Saved Pieces / Heart| W[Wishlist Drawer: View Saved Pieces]
+    C --> D[Horizontal Filter & Sort Bar]
+    D -->|Filter by Category/Price/Color| E[Asymmetric Exhibition Grid]
+    E -->|Tap Wishlist Heart| W1[Save Item to Local Wishlist]
+    E -->|Tap Quick Buy '+'| F[Add Item Directly to Bag]
+    E -->|Tap Product Card| G[Product Detail Drawer]
     G -->|Select Variant & Add| F
+    W -->|Move to Bag / Move All| F
     F --> H[Sliding Cart Drawer Opens]
     H -->|Review Items & Subtotal| I[Instant Stripe Checkout]
     I --> J[Order Confirmation & Tracking]
@@ -52,13 +55,42 @@ flowchart TD
 
 ## 4. Detailed Feature Specifications
 
-### 4.1 Header & Top App Bar
-- **Branding**: Left-aligned monogram badge + `"YOUR NEXT STORE"` in uppercase tracked `title-editorial` typography.
+### 4.1 Home Page (Editorial Landing Exhibition)
+- **Grand Hero Exhibition Banner**: 
+  - Dynamic display typography (*Playfair Display*, 54px desktop / 38px mobile): *"Form, Texture & Permanence."*
+  - Active pulse capsule badge: `SS26 Exhibition Release`.
+  - Primary CTA pill: `"Explore SS26 Capsule"` (switches to catalog).
+  - Secondary CTA pill: `"Saved Pieces"` (triggers Wishlist drawer).
+- **Curated Department Portals**: 
+  - 3 high-contrast portal cards linking to catalog departments:
+    1. *Leather Goods & Totes* (4 pieces, sculpted bamboo handles, calfskin).
+    2. *Footwear & Strides* (1 piece, midnight charcoal woven soles).
+    3. *Vessels & Eyewear* (2 pieces, thermal bronze, amber acetate).
+- **Curator’s Exhibition Spotlight**: 
+  - Showcases flagship piece (*Le Bag Autre*, $2,458.77) with signature edition badge, editorial critique, and direct `"Acquire Piece"` trigger.
+- **Atelier Craftsmanship Pillars**:
+  - Highlights *Artisanal Provenance* (Florence & Milan master tanneries), *Frictionless Commerce* (instant Stripe/Apple Pay/Klarna), and *Carbon Neutral Delivery* (verified carbon offset).
+
+### 4.2 Header & Top App Bar
+- **Branding**: Left-aligned monogram badge + `"YOUR NEXT STORE"` in uppercase tracked `title-editorial` typography (acts as Home trigger).
+- **Desktop Navigation Links**: Direct navigation to `Home`, `Accessories`, and `SS26 Capsule`.
 - **Navigation Controls**:
   - Drawer menu icon trigger (left).
   - Search modal trigger button (right).
+  - Dedicated Wishlist trigger button with live Coral Red badge counter (`#FF3823`).
   - Shopping Bag trigger with live dynamic pill badge counter (highlighted in Electric Cobalt `#2B4CFF`).
 - **Visual Style**: Frosted sticky backdrop blur (`backdrop-blur-md`), 1px subtle hairline border (`#E7E4DC`), dark/light mode adaptable.
+
+### 4.3 Dedicated Wishlist Drawer & Management
+- **Slide-Over Panel**: Dedicated right-side drawer opening from header wishlist icon, bottom navigation island, or in-page triggers.
+- **Wishlist State & Persistence**: Synchronized in real time with client `localStorage` (`yns_wishlist`).
+- **Individual Item Actions**:
+  - Item preview with thumbnail, title, category, subtitle, and price.
+  - One-tap `"To Bag"` button that immediately transfers the item to the active cart and removes it from the wishlist.
+  - Delete / Remove action icon.
+- **Batch Actions**: `"Move All to Shopping Bag"` CTA button.
+- **Empty State**: Tailored illustration with `"Browse SS26 Capsule"` call to action.
+- **Total Curation Valuation**: Displays the aggregated value of all favorited items.
 
 ### 4.2 Editorial Hero & Masthead
 - **Capsule Badge**: Full pill curvature badge containing an active Electric Cobalt pulsing dot and uppercase text: `SS26 CAPSULE`.

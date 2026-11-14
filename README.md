@@ -26,14 +26,16 @@ This repository contains an end-to-end software engineering and product document
 
 ## ✨ Key Design & Experience Pillars
 
-1. **Editorial Pacing & Asymmetry:** Rather than repetitive uniform product rows, products are presented with calculated pacing: an expansive 4:3 Curator's Pick exhibition hero tile paired with responsive 4:5 discovery cards.
-2. **High-Contrast Haute Typography:** Section mastheads and titles rendered in high-contrast **Playfair Display**, price capsules and technical codes in **Space Grotesk**, and descriptions in legible **Geist**.
-3. **Tactile Micro-Interactions:**
+1. **Editorial Home Page:** Grand exhibition landing page with hero typography (*Playfair Display*), curated department cards (Leather Goods, Footwear, Vessels & Eyewear), spotlight feature (*Le Bag Autre*), and atelier craftsmanship principles.
+2. **Dedicated Wishlist Drawer:** Slide-over management drawer displaying saved pieces, aggregate valuation, one-click `"To Bag"` transfer, and `"Move All"` capability synchronized with `localStorage`.
+3. **Editorial Pacing & Asymmetry:** Rather than repetitive uniform product rows, products are presented with calculated pacing: an expansive 4:3 Curator's Pick exhibition hero tile paired with responsive 4:5 discovery cards.
+4. **High-Contrast Haute Typography:** Section mastheads and titles rendered in high-contrast **Playfair Display**, price capsules and technical codes in **Space Grotesk**, and descriptions in legible **Geist**.
+5. **Tactile Micro-Interactions:**
    - **Floating Price Capsules:** Frosted glass badge anchored over product photography.
    - **One-Tap Quick Buy:** Immediate visual feedback with icon transition (`+` → `✓`) and Electric Cobalt glow.
-   - **Wishlist Heart Triggers:** Dynamic state toggling with instant local persistence.
-4. **Docked Island Navigation:** Floating frosted acrylic glass pill docked 16px above the viewport base, respecting mobile safe-area insets.
-5. **Interactive Sliding Cart:** Slide-over cart overlay featuring dynamic line item controls, tax/shipping computation, and a complimentary shipping progress bar ($250 threshold).
+   - **Wishlist Heart Triggers:** Dynamic state toggling with instant local persistence and live badge counters.
+6. **Docked Island Navigation:** Floating frosted acrylic glass pill docked 16px above the viewport base, respecting mobile safe-area insets (`Home`, `Catalog`, `Wishlist`, `Bag`).
+7. **Interactive Sliding Cart:** Slide-over cart overlay featuring dynamic line item controls, tax/shipping computation, and a complimentary shipping progress bar ($250 threshold).
 
 ---
 

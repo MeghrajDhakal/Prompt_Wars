@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Accessories — Luxe Editorial Commerce</title>
+  <title>Your Next Store — Luxe Editorial Commerce</title>
   <!-- Google Fonts: Playfair Display, Space Grotesk, Geist -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
@@ -73,17 +73,29 @@
         <button id="menu-btn" aria-label="Menu" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[22px]">menu</span>
         </button>
-        <a class="flex items-center gap-2" href="/">
+        <button id="brand-logo-btn" class="flex items-center gap-2 cursor-pointer focus:outline-none">
           <div class="w-5 h-5 bg-text-primary text-background rounded-sm flex items-center justify-center">
             <span class="material-symbols-outlined text-[14px]">shopping_bag</span>
           </div>
           <span class="font-title-editorial uppercase tracking-widest text-[15px] font-semibold text-text-primary">Your Next Store</span>
-        </a>
+        </button>
       </div>
+
+      <!-- Navigation Links on Tablet / Desktop -->
+      <nav class="hidden md:flex items-center gap-6 font-label-caps text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+        <button id="nav-link-home" class="text-text-primary hover:text-text-primary transition-colors">Home</button>
+        <button id="nav-link-catalog" class="hover:text-text-primary transition-colors">Accessories</button>
+        <button id="nav-link-capsule" class="hover:text-text-primary transition-colors">SS26 Capsule</button>
+      </nav>
+
       <!-- Trailing Action Cluster -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 md:gap-2">
         <button id="search-btn" aria-label="Search" class="w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[20px]">search</span>
+        </button>
+        <button id="header-wishlist-btn" aria-label="Wishlist" class="relative w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[20px]">favorite</span>
+          <span id="header-wishlist-badge" class="absolute top-1.5 right-1.5 w-4 h-4 bg-badge-discount text-white text-[10px] font-medium rounded-full flex items-center justify-center">0</span>
         </button>
         <button id="bag-btn" aria-label="Bag" class="relative w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
@@ -93,11 +105,153 @@
     </div>
   </header>
 
-  <!-- Main Editorial Canvas -->
-  <main class="max-w-screen-md mx-auto px-5 pt-4">
+  <!-- ========================================== -->
+  <!-- 1. HOME VIEW (Editorial Landing Page) -->
+  <!-- ========================================== -->
+  <div id="home-view" class="max-w-screen-md mx-auto px-5 pt-4 transition-opacity duration-300">
+    <!-- Grand Editorial Hero Banner -->
+    <section class="mb-12 pt-2">
+      <div class="relative bg-surface-canvas rounded-3xl overflow-hidden border border-border-subtle p-7 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div class="relative z-10 max-w-xl">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-surface-card rounded-full border border-border-subtle mb-5 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-accent-electric animate-pulse"></span>
+            <span class="font-label-caps uppercase text-[11px] font-semibold text-text-primary tracking-wider">SS26 Exhibition Release</span>
+          </div>
+          <h1 class="font-display-hero text-[38px] md:text-[54px] leading-[1.08] font-semibold text-text-primary tracking-tight mb-5">
+            Form, Texture &amp; Permanence.
+          </h1>
+          <p class="font-body-lg text-[15px] md:text-[16px] text-text-muted leading-relaxed mb-8 max-w-md">
+            A radical return to tactile craftsmanship, sculptural geometry, and deliberate negative space. Explore the avant-garde catalog.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <button id="home-cta-shop" class="h-12 px-7 bg-text-primary text-white hover:bg-accent-electric rounded-full font-label-caps text-[12px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-2 shadow-md">
+              <span>Explore SS26 Capsule</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+            <button id="home-cta-wishlist" class="h-12 px-6 bg-surface-card border border-border-subtle hover:border-text-primary text-text-primary rounded-full font-label-caps text-[12px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-2">
+              <span class="material-symbols-outlined text-[16px] text-badge-discount">favorite</span>
+              <span>Saved Pieces</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ambient Architectural Accents -->
+        <div class="absolute right-0 bottom-0 w-80 h-80 opacity-20 pointer-events-none transform translate-x-12 translate-y-12">
+          <div class="w-full h-full rounded-full border-[1.5px] border-text-primary"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Category Portals -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <span class="font-label-caps text-[11px] font-semibold uppercase text-text-muted tracking-widest block mb-1">Departments</span>
+          <h2 class="font-headline-md text-[22px] font-medium text-text-primary">Curated Collections</h2>
+        </div>
+        <button id="home-view-all-categories" class="font-label-caps text-[11px] font-semibold uppercase text-accent-electric tracking-wider hover:underline flex items-center gap-1">
+          <span>All 7 Pieces</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Card 1: Leather Goods -->
+        <div data-goto-category="leather" class="category-card group bg-surface-card rounded-2xl border border-border-subtle p-5 cursor-pointer hover:shadow-lg transition-all">
+          <div class="aspect-square bg-surface-canvas rounded-xl mb-4 overflow-hidden p-4 flex items-center justify-center">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXHK8drnnP9l7NsNXoazb2ZeEwYd7WG7iSL95e9WKldh74rX2p0cMVV1oqFn83LaNkdvbPN5g-htuGoSJOepBmSI9U3axvWuBanD_dws2c1FoDFshsjYGKV8-jQUKvLaaltAxY6pKhUUVc-cAoia4p7flw7KYG3fluRAaL57s4QafkQFp6v8KfSqJCa6t4NsBtXW4mlE8l_yTWiUlO0l9YqmR3hA06jcixItl5GX" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" alt="Leather Goods"/>
+          </div>
+          <span class="font-label-caps text-[10px] uppercase tracking-wider text-accent-electric font-semibold block mb-1">4 Pieces</span>
+          <h3 class="font-headline-md text-[18px] font-medium text-text-primary mb-1">Leather Goods &amp; Totes</h3>
+          <p class="font-body-sm text-[12px] text-text-muted">Sculpted bamboo handles and Italian calfskin polishes.</p>
+        </div>
+
+        <!-- Card 2: Footwear -->
+        <div data-goto-category="footwear" class="category-card group bg-surface-card rounded-2xl border border-border-subtle p-5 cursor-pointer hover:shadow-lg transition-all">
+          <div class="aspect-square bg-surface-canvas rounded-xl mb-4 overflow-hidden p-4 flex items-center justify-center">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-7rNap8iLkKSBe-NfIhu4TiysoY_PWnFCQJaRRVlTao-h1dtAn_8WY77gipZO5ojo0rhHxz3c685qrirSxh37D4j0NL4jrPTiGCkFpYYh-vWjCezTfF4lEvqwIjZZowA_jV2qPMEOkZdBXf9U3J6SMI82aGzPtPG1s2acdaHl4WGvM7vRs9sO-9UUkLRH1aA4HSpchctmhQzm9rJ_XV5QgCrfGAuD3gwbIlhXGslJ" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" alt="Footwear"/>
+          </div>
+          <span class="font-label-caps text-[10px] uppercase tracking-wider text-accent-electric font-semibold block mb-1">1 Piece</span>
+          <h3 class="font-headline-md text-[18px] font-medium text-text-primary mb-1">Footwear &amp; Strides</h3>
+          <p class="font-body-sm text-[12px] text-text-muted">Midnight charcoal weaves with minimal ergonomics.</p>
+        </div>
+
+        <!-- Card 3: Design Objects -->
+        <div data-goto-category="objects" class="category-card group bg-surface-card rounded-2xl border border-border-subtle p-5 cursor-pointer hover:shadow-lg transition-all">
+          <div class="aspect-square bg-surface-canvas rounded-xl mb-4 overflow-hidden p-4 flex items-center justify-center">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4M9Xkburnj7wVjerQuDbo3wYzrNOzcb2Ac0T_q-ZQT7nMHBV8WpzEUDK6tsEp2SZ2quInRGjnSXaOk_oioghPQCJAnZF9d_vJmySMBqQ4dDqLfBMx_2d4c1LsLGO-W0HUagWNfqrlCTPo4tflHDxvzzw_e6LLGpIn0v5I6lf9LGgnnIsqjaKrMhlZ69RxUVyGEvQrAl6r_Z83bYqWM3kpgwpg7ksdQfbyO3CZ_U1x" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" alt="Design Objects"/>
+          </div>
+          <span class="font-label-caps text-[10px] uppercase tracking-wider text-accent-electric font-semibold block mb-1">2 Pieces</span>
+          <h3 class="font-headline-md text-[18px] font-medium text-text-primary mb-1">Vessels &amp; Eyewear</h3>
+          <p class="font-body-sm text-[12px] text-text-muted">Thermal bronze thermal ware and amber acetate frames.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curator's Exhibition Spotlight -->
+    <section class="mb-12 bg-surface-canvas rounded-3xl p-6 md:p-8 border border-border-subtle">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="w-full md:w-1/2 aspect-square bg-white rounded-2xl p-6 flex items-center justify-center shadow-xs">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWxOljzOGVKz4x4LpPvY9yuZjDtG2aJBanv5gKISb3z5-VqGbnKa2gsSFpZ70Hw1R8DmlNJZTLeUiOjKhX0zlooBIwFKMYD_63o6lvnPqHFWg5Op7H3F082Syim5qkR6fZNxm6e_YdJHRFOBcaeB97cARYtivtU810YoV7wrYqkr5iX1xAM3qeKh9fpriM85qLAH_AiR8vb1_HnPQ5bYsSNU_jGoPQ24b6briY_eln" alt="Le Bag Autre" class="max-h-full max-w-full object-contain mix-blend-multiply"/>
+        </div>
+        <div class="w-full md:w-1/2 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-dark text-white rounded-full font-label-caps text-[10px] uppercase tracking-widest font-semibold">
+            Signature Edition
+          </div>
+          <h2 class="font-headline-lg text-[28px] font-semibold text-text-primary leading-tight">Le Bag Autre</h2>
+          <p class="font-body-md text-[14px] text-text-muted leading-relaxed">
+            Crafted from high-gloss burgundy calfskin leather with razor-sharp geometric paneling. Polished to a mirror sheen under museum spotlighting.
+          </p>
+          <div class="flex items-center justify-between pt-2">
+            <span class="font-price-tag text-[22px] font-bold text-text-primary">$2,458.77</span>
+            <button data-action="quick-add" data-id="p3" class="h-11 px-6 bg-text-primary hover:bg-accent-electric text-white rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">add</span>
+              <span>Acquire Piece</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Atelier Craftsmanship Pillars -->
+    <section class="mb-14">
+      <div class="text-center max-w-md mx-auto mb-8">
+        <span class="font-label-caps text-[11px] font-semibold uppercase text-accent-electric tracking-widest block mb-1">Principles</span>
+        <h2 class="font-headline-lg text-[26px] font-semibold text-text-primary">Crafted Without Compromise</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="p-6 bg-surface-card rounded-2xl border border-border-subtle">
+          <div class="w-12 h-12 rounded-full bg-surface-canvas flex items-center justify-center mx-auto mb-4 text-text-primary">
+            <span class="material-symbols-outlined text-[24px]">verified</span>
+          </div>
+          <h3 class="font-headline-md text-[17px] font-medium text-text-primary mb-2">Artisanal Provenance</h3>
+          <p class="font-body-sm text-[12px] text-text-muted leading-relaxed">Sourced directly from independent master leather tanneries in Florence and Milan.</p>
+        </div>
+        <div class="p-6 bg-surface-card rounded-2xl border border-border-subtle">
+          <div class="w-12 h-12 rounded-full bg-surface-canvas flex items-center justify-center mx-auto mb-4 text-text-primary">
+            <span class="material-symbols-outlined text-[24px]">bolt</span>
+          </div>
+          <h3 class="font-headline-md text-[17px] font-medium text-text-primary mb-2">Frictionless Commerce</h3>
+          <p class="font-body-sm text-[12px] text-text-muted leading-relaxed">Instant one-tap digital purchasing with native Stripe, Apple Pay, and Klarna support.</p>
+        </div>
+        <div class="p-6 bg-surface-card rounded-2xl border border-border-subtle">
+          <div class="w-12 h-12 rounded-full bg-surface-canvas flex items-center justify-center mx-auto mb-4 text-text-primary">
+            <span class="material-symbols-outlined text-[24px]">eco</span>
+          </div>
+          <h3 class="font-headline-md text-[17px] font-medium text-text-primary mb-2">Carbon Neutral Delivery</h3>
+          <p class="font-body-sm text-[12px] text-text-muted leading-relaxed">Every global order ships with 100% verified carbon offset and recyclable packaging.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. CATALOG VIEW (Accessories Exhibition) -->
+  <!-- ========================================== -->
+  <main id="catalog-view" class="max-w-screen-md mx-auto px-5 pt-4 hidden transition-opacity duration-300">
     <!-- Breadcrumbs Navigation -->
     <nav aria-label="Breadcrumb" class="flex items-center gap-2 font-label-caps text-[11px] text-text-muted mb-4 uppercase tracking-widest font-semibold">
-      <a class="hover:text-text-primary transition-colors" href="/">Home</a>
+      <button id="breadcrumb-home" class="hover:text-text-primary transition-colors cursor-pointer">Home</button>
       <span class="text-border-strong/30 text-[10px]">/</span>
       <span class="text-text-primary font-semibold">Accessories</span>
     </nav>
@@ -133,7 +287,7 @@
         Leather Goods
       </button>
       <button id="filter-drink-btn" class="px-4 py-2 bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex-shrink-0">
-        Drinkware & Eye
+        Drinkware &amp; Eye
       </button>
       <div class="relative flex-shrink-0">
         <select id="sort-select" class="appearance-none pl-4 pr-8 py-2 bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold active:scale-95 transition-all focus:outline-none focus:border-text-primary cursor-pointer">
@@ -148,11 +302,13 @@
 
     <!-- Product Showcase (Curated Asymmetric Mobile Grid) -->
     <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
-      <!-- Injected via JavaScript dynamically for real filtering & sorting -->
+      <!-- Injected via JavaScript dynamically -->
     </div>
+  </main>
 
-    <!-- Editorial Brand Statement Banner -->
-    <section class="bg-surface-dark text-white rounded-3xl p-7 md:p-10 mb-12 relative overflow-hidden">
+  <!-- Shared Editorial Brand Statement Banner (Visible on all views) -->
+  <section class="max-w-screen-md mx-auto px-5 mb-12">
+    <div class="bg-surface-dark text-white rounded-3xl p-7 md:p-10 relative overflow-hidden">
       <div class="relative z-10 max-w-md">
         <span class="font-label-caps uppercase text-accent-electric text-[11px] tracking-widest font-semibold block mb-3">Manifesto</span>
         <blockquote class="font-headline-lg text-[24px] md:text-[30px] font-medium leading-snug mb-6 text-white">
@@ -174,78 +330,85 @@
       </div>
       <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full border border-white/5 pointer-events-none"></div>
       <div class="absolute -right-4 -bottom-4 w-48 h-48 rounded-full border border-white/10 pointer-events-none"></div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Comprehensive Mobile Brand Footer -->
-    <footer class="pt-8 border-t border-border-subtle">
-      <div class="mb-8">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="w-5 h-5 bg-text-primary text-background rounded-sm flex items-center justify-center">
-            <span class="material-symbols-outlined text-[14px]">shopping_bag</span>
-          </div>
-          <span class="font-title-editorial text-[15px] font-semibold uppercase tracking-widest text-text-primary">Your Next Store</span>
+  <!-- Comprehensive Mobile Brand Footer -->
+  <footer class="max-w-screen-md mx-auto px-5 pt-8 border-t border-border-subtle">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="w-5 h-5 bg-text-primary text-background rounded-sm flex items-center justify-center">
+          <span class="material-symbols-outlined text-[14px]">shopping_bag</span>
         </div>
-        <p class="font-body-sm text-[12px] text-text-muted">
-          Online commerce should be fast, simple, and modern.
-        </p>
+        <span class="font-title-editorial text-[15px] font-semibold uppercase tracking-widest text-text-primary">Your Next Store</span>
       </div>
+      <p class="font-body-sm text-[12px] text-text-muted">
+        Online commerce should be fast, simple, and modern.
+      </p>
+    </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-10">
-        <div>
-          <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Shop</h3>
-          <ul class="space-y-2 font-body-sm text-[12px]">
-            <li><a class="text-text-primary font-medium" href="/category/accessories">Accessories</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Apparel</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Digital</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Support</h3>
-          <ul class="space-y-2 font-body-sm text-[12px]">
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">About Us</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Contact Us</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">FAQ</a></li>
-          </ul>
-        </div>
-        <div class="col-span-2 md:col-span-1">
-          <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Legal</h3>
-          <ul class="space-y-2 font-body-sm text-[12px]">
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Terms of Service</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Privacy Policy</a></li>
-            <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Return Policy</a></li>
-          </ul>
-        </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+      <div>
+        <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Shop</h3>
+        <ul class="space-y-2 font-body-sm text-[12px]">
+          <li><button class="footer-nav-catalog text-text-primary font-medium hover:underline">Accessories</button></li>
+          <li><button class="footer-nav-catalog text-text-muted hover:text-text-primary transition-colors">Apparel</button></li>
+          <li><button class="footer-nav-catalog text-text-muted hover:text-text-primary transition-colors">Digital</button></li>
+        </ul>
       </div>
-
-      <div class="pt-6 border-t border-border-subtle flex flex-wrap items-center justify-between gap-4 mb-4">
-        <span class="font-badge-micro text-[10px] text-text-muted uppercase tracking-wider">
-          © 2026 Your Next Store. All rights reserved.
-        </span>
-        <div class="flex items-center gap-2 text-text-muted">
-          <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">VISA</div>
-          <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">MC</div>
-          <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">APPLE PAY</div>
-          <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">G PAY</div>
-          <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">KLARNA</div>
-        </div>
+      <div>
+        <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Support</h3>
+        <ul class="space-y-2 font-body-sm text-[12px]">
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">About Us</a></li>
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Contact Us</a></li>
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">FAQ</a></li>
+        </ul>
       </div>
-    </footer>
-  </main>
+      <div class="col-span-2 md:col-span-1">
+        <h3 class="font-label-caps text-[11px] font-semibold uppercase text-text-primary tracking-wider mb-3">Legal</h3>
+        <ul class="space-y-2 font-body-sm text-[12px]">
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Terms of Service</a></li>
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Privacy Policy</a></li>
+          <li><a class="text-text-muted hover:text-text-primary transition-colors" href="#">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
 
-  <!-- BottomNavBar Floating Island Navigation -->
+    <div class="pt-6 border-t border-border-subtle flex flex-wrap items-center justify-between gap-4 mb-4">
+      <span class="font-badge-micro text-[10px] text-text-muted uppercase tracking-wider">
+        © 2026 Your Next Store. All rights reserved.
+      </span>
+      <div class="flex items-center gap-2 text-text-muted">
+        <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">VISA</div>
+        <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">MC</div>
+        <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">APPLE PAY</div>
+        <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">G PAY</div>
+        <div class="px-2 py-0.5 rounded bg-surface-container border border-border-subtle text-[10px] font-bold tracking-wider">KLARNA</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- 3. FLOATING ISLAND NAVIGATION -->
+  <!-- ========================================== -->
   <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-6 py-2.5 max-w-sm mx-auto safe-area-inset-bottom rounded-full mb-4 border border-border-subtle bg-surface-card/90 backdrop-blur-xl shadow-[0_16px_36px_-8px_rgba(18,18,20,0.12)]">
+    <!-- Discover / Home -->
     <button id="nav-discover" aria-label="Discover" class="flex flex-col items-center justify-center text-text-primary font-semibold transition-colors active:scale-90">
-      <span class="material-symbols-outlined text-[20px] fill-icon">explore</span>
-      <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Discover</span>
+      <span class="material-symbols-outlined text-[20px] fill-icon">home</span>
+      <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Home</span>
     </button>
-    <button id="nav-search" aria-label="Search" class="flex flex-col items-center justify-center text-text-muted hover:text-text-primary transition-colors active:scale-90">
-      <span class="material-symbols-outlined text-[20px]">search</span>
-      <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Search</span>
+    <!-- Catalog / Accessories -->
+    <button id="nav-catalog" aria-label="Catalog" class="flex flex-col items-center justify-center text-text-muted hover:text-text-primary transition-colors active:scale-90">
+      <span class="material-symbols-outlined text-[20px]">explore</span>
+      <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Catalog</span>
     </button>
-    <button id="nav-curated" aria-label="Curated" class="flex flex-col items-center justify-center text-text-muted hover:text-text-primary transition-colors active:scale-90">
-      <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+    <!-- Wishlist / Saved -->
+    <button id="nav-wishlist" aria-label="Wishlist" class="relative flex flex-col items-center justify-center text-text-muted hover:text-text-primary transition-colors active:scale-90">
+      <span class="material-symbols-outlined text-[20px]">favorite</span>
       <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Wishlist</span>
+      <span id="nav-wishlist-badge" class="absolute -top-1 right-1 w-3.5 h-3.5 bg-badge-discount text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
     </button>
+    <!-- Bag / Cart -->
     <button id="nav-bag" aria-label="Bag" class="relative flex flex-col items-center justify-center text-text-muted hover:text-text-primary transition-colors active:scale-90">
       <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
       <span class="font-label-caps text-[10px] tracking-wider mt-0.5">Bag</span>
@@ -253,7 +416,45 @@
     </button>
   </nav>
 
-  <!-- Sliding Cart Drawer Overlay -->
+  <!-- ========================================== -->
+  <!-- 4. SLIDING WISHLIST DRAWER -->
+  <!-- ========================================== -->
+  <div id="wishlist-drawer-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden transition-opacity duration-300">
+    <div id="wishlist-drawer-panel" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-surface-card border-l border-border-subtle shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
+      <!-- Wishlist Header -->
+      <div class="p-5 border-b border-border-subtle flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px] text-badge-discount">favorite</span>
+          <h2 class="font-headline-md text-[20px] font-medium text-text-primary">Saved Wishlist</h2>
+          <span id="wishlist-count-pill" class="px-2 py-0.5 bg-surface-container rounded-full font-label-caps text-[11px] text-text-muted">0 pieces</span>
+        </div>
+        <button id="close-wishlist-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-text-primary transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Wishlist Items Container -->
+      <div id="wishlist-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Wishlist Footer Actions -->
+      <div id="wishlist-footer" class="p-5 border-t border-border-subtle bg-surface-canvas/50 space-y-3">
+        <div class="flex justify-between items-center text-[13px] font-body-sm">
+          <span class="text-text-muted">Total Curation Value</span>
+          <span id="wishlist-total-value" class="font-price-tag text-[16px] font-bold text-text-primary">$0.00</span>
+        </div>
+        <button id="wishlist-move-all-btn" class="w-full h-12 bg-text-primary hover:bg-accent-electric text-white rounded-full font-label-caps text-[12px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg">
+          <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          <span>Move All to Shopping Bag</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. SLIDING CART DRAWER OVERLAY -->
+  <!-- ========================================== -->
   <div id="cart-drawer-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden transition-opacity duration-300">
     <div id="cart-drawer-panel" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-surface-card border-l border-border-subtle shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
       <!-- Drawer Header -->
@@ -310,13 +511,15 @@
           <span>Proceed to Stripe Checkout</span>
         </button>
         <p class="text-center text-[10px] font-badge-micro text-text-muted uppercase tracking-wider">
-          Complimentary Worldwide Carbon-Neutral Delivery & 30-Day Returns
+          Complimentary Worldwide Carbon-Neutral Delivery &amp; 30-Day Returns
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Product Detail Drawer -->
+  <!-- ========================================== -->
+  <!-- 6. PRODUCT DETAIL MODAL DRAWER -->
+  <!-- ========================================== -->
   <div id="product-modal-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden transition-opacity duration-300">
     <div id="product-modal-panel" class="absolute bottom-0 md:top-0 md:right-0 md:bottom-0 w-full max-w-lg bg-surface-card rounded-t-3xl md:rounded-none md:border-l border-border-subtle shadow-2xl flex flex-col max-h-[90vh] md:max-h-full overflow-y-auto">
       <div class="p-5 flex justify-between items-center border-b border-border-subtle sticky top-0 bg-surface-card z-10">
@@ -344,15 +547,22 @@
           <div class="flex justify-between"><span class="text-text-muted">Dimensions</span><span class="text-text-primary font-medium">28cm × 19cm × 11cm</span></div>
           <div class="flex justify-between"><span class="text-text-muted">Delivery</span><span class="text-accent-electric font-medium">Complimentary 2-Day Air</span></div>
         </div>
-        <button id="modal-add-cart-btn" class="w-full h-12 bg-text-primary hover:bg-accent-electric text-white rounded-full font-label-caps text-[12px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center justify-center gap-2">
-          <span class="material-symbols-outlined text-[18px]">add</span>
-          <span>Add to Shopping Bag</span>
-        </button>
+        <div class="flex gap-3">
+          <button id="modal-wishlist-toggle" class="h-12 px-5 rounded-full border border-border-subtle hover:border-text-primary flex items-center justify-center text-text-primary transition-colors active:scale-95">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+          </button>
+          <button id="modal-add-cart-btn" class="flex-1 h-12 bg-text-primary hover:bg-accent-electric text-white rounded-full font-label-caps text-[12px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            <span>Add to Shopping Bag</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Search Modal -->
+  <!-- ========================================== -->
+  <!-- 7. SEARCH OVERLAY MODAL -->
+  <!-- ========================================== -->
   <div id="search-modal-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden transition-opacity duration-300">
     <div class="max-w-md mx-auto mt-16 p-4">
       <div class="bg-surface-card rounded-2xl shadow-2xl border border-border-subtle p-4">
@@ -370,7 +580,9 @@
     </div>
   </div>
 
-  <!-- Checkout Success Modal -->
+  <!-- ========================================== -->
+  <!-- 8. CHECKOUT SUCCESS MODAL -->
+  <!-- ========================================== -->
   <div id="checkout-success-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-surface-card max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-border-subtle">
       <div class="w-14 h-14 bg-accent-electric text-white rounded-full flex items-center justify-center mx-auto shadow-lg">
@@ -390,9 +602,11 @@
     </div>
   </div>
 
-  <!-- Application Logic & State Engine -->
+  <!-- ========================================== -->
+  <!-- 9. SCRIPT & APPLICATION ENGINE -->
+  <!-- ========================================== -->
   <script>
-    // 1. Catalog Products Data
+    // Products Database
     const products = [
       {
         id: "p1",
@@ -405,7 +619,6 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4:3",
-        colSpan: "col-span-1 md:col-span-2",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXHK8drnnP9l7NsNXoazb2ZeEwYd7WG7iSL95e9WKldh74rX2p0cMVV1oqFn83LaNkdvbPN5g-htuGoSJOepBmSI9U3axvWuBanD_dws2c1FoDFshsjYGKV8-jQUKvLaaltAxY6pKhUUVc-cAoia4p7flw7KYG3fluRAaL57s4QafkQFp6v8KfSqJCa6t4NsBtXW4mlE8l_yTWiUlO0l9YqmR3hA06jcixItl5GX",
         alt: "Azure Drift Luxury Bag",
         desc: "A modern luxury sky blue leather handbag with sculpted bamboo curved top handle displayed in an avant-garde editorial studio. Features fine edge paint, brushed brass hardware, and Italian calfskin leather."
@@ -421,7 +634,6 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCGhW40SSbL1Mb61hI2ByCrnYmucwLiGPrzmG_j2-pWFi5dOirCvbacDjms1Mywvt2vkoVVUV7GBET9vbcRynAiKXWYR-PYqNM6k-yAsDKA_gdm-3P2Q27xhJS0Eh_tRR6B0QUKx9xSPpmmtjIXVOnayWyLi4z_M8IeYfLGO7h36eDEoqhW4iMz8bjTrYaKBgV1yFDdAwhqCfxa8v5-vDzPeHtJEF1QUKuGZnlC2S-a",
         alt: "Ocean Bloom Bag",
         desc: "A structured vibrant cobalt and azure blue leather tote bag featuring warm ochre tan leather dual handles photographed in a high-fashion clean white studio set."
@@ -437,7 +649,6 @@
         isSignature: true,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWxOljzOGVKz4x4LpPvY9yuZjDtG2aJBanv5gKISb3z5-VqGbnKa2gsSFpZ70Hw1R8DmlNJZTLeUiOjKhX0zlooBIwFKMYD_63o6lvnPqHFWg5Op7H3F082Syim5qkR6fZNxm6e_YdJHRFOBcaeB97cARYtivtU810YoV7wrYqkr5iX1xAM3qeKh9fpriM85qLAH_AiR8vb1_HnPQ5bYsSNU_jGoPQ24b6briY_eln",
         alt: "Le Bag Autre",
         desc: "An ultra-luxurious deep burgundy polished calfskin leather shoulder handbag with sleek geometric paneling and slender handles standing upright in a museum-grade spotlight setup."
@@ -453,7 +664,6 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA4M9Xkburnj7wVjerQuDbo3wYzrNOzcb2Ac0T_q-ZQT7nMHBV8WpzEUDK6tsEp2SZ2quInRGjnSXaOk_oioghPQCJAnZF9d_vJmySMBqQ4dDqLfBMx_2d4c1LsLGO-W0HUagWNfqrlCTPo4tflHDxvzzw_e6LLGpIn0v5I6lf9LGgnnIsqjaKrMhlZ69RxUVyGEvQrAl6r_Z83bYqWM3kpgwpg7ksdQfbyO3CZ_U1x",
         alt: "Aqua Stride Bottle",
         desc: "A minimalist architectural thermal water bottle engineered with matte dark graphite body and an anodized copper bronze cylindrical top cap."
@@ -469,7 +679,6 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBVYFoKGzSiTRSNXeWxWCgb3hM21eu692d3IvIErdW-WT4Hfqm4waFuBwnQj0SYGlJHWk0NSt1u3NbpnBI8ipX3CBliibtpqkfJJW1znPUVbL1ClHuW2H_PNV2TyDpYmikTAolBaie6BPz-1kXLfzPftgMwj6pojLAgxrIamMPELSUUs5H0gwanc9Iph3Rd1ujKrHaRkmTEDcIv86_Mde4gOJgH1OmVzHKqvitKIXYA",
         alt: "Horizon Gaze Sunglasses",
         desc: "Sophisticated square black acetate designer sunglasses with warm amber sepia tinted lenses displayed flat lay on a warm parchment surface."
@@ -485,7 +694,6 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-7rNap8iLkKSBe-NfIhu4TiysoY_PWnFCQJaRRVlTao-h1dtAn_8WY77gipZO5ojo0rhHxz3c685qrirSxh37D4j0NL4jrPTiGCkFpYYh-vWjCezTfF4lEvqwIjZZowA_jV2qPMEOkZdBXf9U3J6SMI82aGzPtPG1s2acdaHl4WGvM7vRs9sO-9UUkLRH1aA4HSpchctmhQzm9rJ_XV5QgCrfGAuD3gwbIlhXGslJ",
         alt: "Shadow Stride Shoes",
         desc: "A top-down bird-eye view of a pair of refined midnight black and charcoal woven lifestyle sneakers with crisp white minimalist soles and dark navy laces."
@@ -501,21 +709,22 @@
         isSignature: false,
         inStock: true,
         aspectRatio: "4/5",
-        colSpan: "",
         img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBjcL-_7jFsDm7Q2YXKkJ-RT1NPMZ3Nlgs01271V6gcdi4NHPUf2Vx2vpuG9dZCqwHYiSpzXx7A1lW_xL462lJPt0yygA5lG2VDLZRKGxfNGHJWHk3e90Zq3b45BUNTMCtINkFAkMErcEuMuAk4azoxycdhwQUn_eofhiEWSigUUZT7eVgwj6UJkRTTlyXDKABZz-J-sQS6QzK0gj0S3oNbJQmCXizJIkx48VAR8wDS",
         alt: "Sunbeam Tote",
         desc: "An artisanal blush terracotta canvas shoulder tote bag featuring intricate tone-on-tone botanical motif embossing and fine leather trim with playful tassels."
       }
     ];
 
-    // 2. Application State (LocalStorage sync)
+    // State
     let cart = JSON.parse(localStorage.getItem('yns_cart')) || [
       { id: "p1", quantity: 1 },
       { id: "p2", quantity: 1 }
     ];
-    let wishlist = new Set(JSON.parse(localStorage.getItem('yns_wishlist')) || []);
+    let wishlist = new Set(JSON.parse(localStorage.getItem('yns_wishlist')) || ['p3', 'p5']);
+    let currentView = 'home'; // 'home' | 'catalog'
     let activeFilter = 'all';
     let activeSort = 'featured';
+    let activeModalProduct = null;
 
     function saveCart() {
       localStorage.setItem('yns_cart', JSON.stringify(cart));
@@ -523,9 +732,47 @@
     }
     function saveWishlist() {
       localStorage.setItem('yns_wishlist', JSON.stringify(Array.from(wishlist)));
+      updateWishlistUI();
+      renderCatalog();
     }
 
-    // 3. Render Product Catalog
+    // View Switching
+    function setView(view) {
+      currentView = view;
+      const homeView = document.getElementById('home-view');
+      const catalogView = document.getElementById('catalog-view');
+      const navDiscover = document.getElementById('nav-discover');
+      const navCatalog = document.getElementById('nav-catalog');
+
+      if (view === 'home') {
+        homeView.classList.remove('hidden');
+        catalogView.classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        navDiscover.classList.add('text-text-primary');
+        navDiscover.classList.remove('text-text-muted');
+        navDiscover.querySelector('.material-symbols-outlined').classList.add('fill-icon');
+
+        navCatalog.classList.remove('text-text-primary');
+        navCatalog.classList.add('text-text-muted');
+        navCatalog.querySelector('.material-symbols-outlined').classList.remove('fill-icon');
+      } else {
+        homeView.classList.add('hidden');
+        catalogView.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        navDiscover.classList.remove('text-text-primary');
+        navDiscover.classList.add('text-text-muted');
+        navDiscover.querySelector('.material-symbols-outlined').classList.remove('fill-icon');
+
+        navCatalog.classList.add('text-text-primary');
+        navCatalog.classList.remove('text-text-muted');
+        navCatalog.querySelector('.material-symbols-outlined').classList.add('fill-icon');
+        renderCatalog();
+      }
+    }
+
+    // Render Catalog
     function renderCatalog() {
       const grid = document.getElementById('product-grid');
       let filtered = [...products];
@@ -546,7 +793,7 @@
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       }
 
-      grid.innerHTML = filtered.map((p, idx) => {
+      grid.innerHTML = filtered.map((p) => {
         const isHero = p.id === 'p1' && activeFilter === 'all';
         const isFav = wishlist.has(p.id);
         const cardClass = isHero ? "col-span-1 md:col-span-2" : "";
@@ -557,7 +804,6 @@
             <div class="relative w-full ${aspectClass} bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
               <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"/>
               
-              <!-- Curator / Signature Badge -->
               ${p.isCuratorsPick ? `
                 <div class="absolute top-4 left-4">
                   <span class="px-3 py-1 bg-surface-dark/70 backdrop-blur-md text-white font-label-caps text-[10px] rounded-full uppercase tracking-wider font-semibold">
@@ -573,19 +819,19 @@
                 </div>
               ` : ''}
 
-              <!-- Floating Wishlist Trigger -->
+              <!-- Wishlist Trigger -->
               <button aria-label="Add to wishlist" data-action="wishlist" data-id="${p.id}" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90 z-10">
                 <span class="material-symbols-outlined text-[18px] ${isFav ? 'fill-icon text-badge-discount' : ''}">favorite</span>
               </button>
 
-              <!-- Floating Price Capsule -->
+              <!-- Price Capsule -->
               <div class="absolute bottom-4 left-4 pointer-events-none">
                 <span class="px-3 py-1 bg-surface-card/90 backdrop-blur-md text-text-primary border border-border-subtle font-price-tag text-[14px] font-semibold rounded-full shadow-sm">
                   $${p.price.toFixed(2)}
                 </span>
               </div>
 
-              <!-- Quick Buy Floating Trigger -->
+              <!-- Quick Buy Trigger -->
               <button aria-label="Quick Add" data-action="quick-add" data-id="${p.id}" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-text-primary text-white flex items-center justify-center shadow-md active:scale-90 hover:bg-accent-electric transition-all z-10">
                 <span class="material-symbols-outlined text-[18px]">add</span>
               </button>
@@ -608,7 +854,85 @@
       document.getElementById('collection-count').textContent = `${filtered.length} Pieces Selected`;
     }
 
-    // 4. Cart UI Update
+    // Update Wishlist UI & Drawer
+    function updateWishlistUI() {
+      const count = wishlist.size;
+      document.getElementById('header-wishlist-badge').textContent = count;
+      document.getElementById('nav-wishlist-badge').textContent = count;
+      document.getElementById('wishlist-count-pill').textContent = `${count} piece${count === 1 ? '' : 's'}`;
+
+      const container = document.getElementById('wishlist-items-container');
+      const footer = document.getElementById('wishlist-footer');
+
+      if (count === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 space-y-3">
+            <span class="material-symbols-outlined text-[44px] text-text-muted">favorite_border</span>
+            <h4 class="font-headline-md text-[18px] font-medium text-text-primary">Your Wishlist is Empty</h4>
+            <p class="font-body-md text-[13px] text-text-muted max-w-xs mx-auto">
+              Save your favorite exhibition artifacts while exploring the capsule collection.
+            </p>
+            <button id="wishlist-empty-cta" class="mt-4 px-6 py-2.5 bg-text-primary text-white rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold hover:bg-accent-electric transition-colors">
+              Browse SS26 Capsule
+            </button>
+          </div>
+        `;
+        footer.classList.add('hidden');
+        const emptyBtn = document.getElementById('wishlist-empty-cta');
+        if (emptyBtn) {
+          emptyBtn.onclick = () => {
+            closeWishlist();
+            setView('catalog');
+          };
+        }
+      } else {
+        footer.classList.remove('hidden');
+        let totalVal = 0;
+        const items = Array.from(wishlist).map(id => products.find(p => p.id === id)).filter(Boolean);
+
+        container.innerHTML = items.map(p => {
+          totalVal += p.price;
+          return `
+            <div class="flex gap-4 p-3 bg-surface-canvas rounded-xl border border-border-subtle items-center">
+              <img src="${p.img}" alt="${p.name}" class="w-16 h-16 object-contain mix-blend-multiply bg-white rounded-lg p-1"/>
+              <div class="flex-1">
+                <h4 class="font-headline-md text-[15px] font-medium text-text-primary leading-tight">${p.name}</h4>
+                <p class="font-body-sm text-[11px] text-text-muted mb-2">${p.category} · ${p.subtitle}</p>
+                <span class="font-price-tag text-[13px] font-semibold text-text-primary">$${p.price.toFixed(2)}</span>
+              </div>
+              <div class="flex flex-col gap-2 items-end">
+                <button data-wishlist-remove="${p.id}" class="text-text-muted hover:text-badge-discount transition-colors p-1" title="Remove">
+                  <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+                <button data-wishlist-move="${p.id}" class="h-8 px-3 bg-text-primary text-white hover:bg-accent-electric rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center gap-1 shadow-xs">
+                  <span class="material-symbols-outlined text-[12px]">add</span>
+                  <span>To Bag</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        document.getElementById('wishlist-total-value').textContent = `$${totalVal.toFixed(2)}`;
+      }
+    }
+
+    // Wishlist Drawer Controls
+    function openWishlist() {
+      updateWishlistUI();
+      const backdrop = document.getElementById('wishlist-drawer-backdrop');
+      const panel = document.getElementById('wishlist-drawer-panel');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => panel.classList.remove('translate-x-full'), 10);
+    }
+    function closeWishlist() {
+      const backdrop = document.getElementById('wishlist-drawer-backdrop');
+      const panel = document.getElementById('wishlist-drawer-panel');
+      panel.classList.add('translate-x-full');
+      setTimeout(() => backdrop.classList.add('hidden'), 300);
+    }
+
+    // Update Cart UI
     function updateCartUI() {
       const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('header-cart-badge').textContent = totalCount;
@@ -650,7 +974,6 @@
         }).join('');
       }
 
-      // Calculations
       const subtotal = cart.reduce((sum, item) => {
         const prod = products.find(p => p.id === item.id);
         return sum + (prod ? prod.price * item.quantity : 0);
@@ -679,7 +1002,7 @@
       }
     }
 
-    // 5. Drawer Controls
+    // Cart Drawer Controls
     function openCart() {
       const backdrop = document.getElementById('cart-drawer-backdrop');
       const panel = document.getElementById('cart-drawer-panel');
@@ -693,8 +1016,9 @@
       setTimeout(() => backdrop.classList.add('hidden'), 300);
     }
 
-    // 6. Product Detail Modal
+    // Product Modal
     function openProductModal(prod) {
+      activeModalProduct = prod;
       document.getElementById('modal-img').src = prod.img;
       document.getElementById('modal-img').alt = prod.alt;
       document.getElementById('modal-title').textContent = prod.name;
@@ -702,6 +1026,24 @@
       document.getElementById('modal-category').textContent = `${prod.category} · SS26`;
       document.getElementById('modal-desc').textContent = prod.desc;
       document.getElementById('modal-badge').style.display = prod.isCuratorsPick ? 'block' : 'none';
+
+      const favIcon = document.getElementById('modal-wishlist-toggle').querySelector('.material-symbols-outlined');
+      if (wishlist.has(prod.id)) {
+        favIcon.classList.add('fill-icon', 'text-badge-discount');
+      } else {
+        favIcon.classList.remove('fill-icon', 'text-badge-discount');
+      }
+
+      document.getElementById('modal-wishlist-toggle').onclick = () => {
+        if (wishlist.has(prod.id)) {
+          wishlist.delete(prod.id);
+          favIcon.classList.remove('fill-icon', 'text-badge-discount');
+        } else {
+          wishlist.add(prod.id);
+          favIcon.classList.add('fill-icon', 'text-badge-discount');
+        }
+        saveWishlist();
+      };
 
       const btn = document.getElementById('modal-add-cart-btn');
       btn.onclick = () => {
@@ -714,9 +1056,10 @@
     }
     function closeProductModal() {
       document.getElementById('product-modal-backdrop').classList.add('hidden');
+      activeModalProduct = null;
     }
 
-    // 7. Cart Actions
+    // Cart Actions
     function addItemToCart(id) {
       const existing = cart.find(i => i.id === id);
       if (existing) {
@@ -727,12 +1070,80 @@
       saveCart();
     }
 
-    // 8. Event Listeners
+    // Initialization & Listeners
     document.addEventListener('DOMContentLoaded', () => {
       renderCatalog();
       updateCartUI();
+      updateWishlistUI();
 
-      // Grid delegation (Cards, Quick Add, Wishlist)
+      // Top logo & Nav links
+      document.getElementById('brand-logo-btn').onclick = () => setView('home');
+      document.getElementById('nav-link-home').onclick = () => setView('home');
+      document.getElementById('nav-link-catalog').onclick = () => setView('catalog');
+      document.getElementById('nav-link-capsule').onclick = () => setView('catalog');
+      document.getElementById('breadcrumb-home').onclick = () => setView('home');
+      document.querySelectorAll('.footer-nav-catalog').forEach(b => b.onclick = () => setView('catalog'));
+
+      // Home Hero CTAs
+      document.getElementById('home-cta-shop').onclick = () => setView('catalog');
+      document.getElementById('home-cta-wishlist').onclick = openWishlist;
+      document.getElementById('home-view-all-categories').onclick = () => setView('catalog');
+
+      // Home Category Cards
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.onclick = () => {
+          const cat = card.dataset.gotoCategory;
+          if (cat === 'leather') activeFilter = 'leather';
+          else if (cat === 'objects') activeFilter = 'drink';
+          else activeFilter = 'all';
+          setView('catalog');
+        };
+      });
+
+      // Bottom Island Navigation
+      document.getElementById('nav-discover').onclick = () => setView('home');
+      document.getElementById('nav-catalog').onclick = () => setView('catalog');
+      document.getElementById('nav-wishlist').onclick = openWishlist;
+      document.getElementById('header-wishlist-btn').onclick = openWishlist;
+      document.getElementById('nav-bag').onclick = openCart;
+      document.getElementById('bag-btn').onclick = openCart;
+
+      // Wishlist Drawer Triggers
+      document.getElementById('close-wishlist-btn').onclick = closeWishlist;
+      document.getElementById('wishlist-drawer-backdrop').onclick = (e) => {
+        if (e.target.id === 'wishlist-drawer-backdrop') closeWishlist();
+      };
+
+      // Wishlist Items Container Actions (Move to bag / Remove)
+      document.getElementById('wishlist-items-container').addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('button[data-wishlist-remove]');
+        if (removeBtn) {
+          const id = removeBtn.dataset.wishlistRemove;
+          wishlist.delete(id);
+          saveWishlist();
+          return;
+        }
+        const moveBtn = e.target.closest('button[data-wishlist-move]');
+        if (moveBtn) {
+          const id = moveBtn.dataset.wishlistMove;
+          addItemToCart(id);
+          wishlist.delete(id);
+          saveWishlist();
+          openCart();
+          return;
+        }
+      });
+
+      // Move All from Wishlist to Bag
+      document.getElementById('wishlist-move-all-btn').onclick = () => {
+        wishlist.forEach(id => addItemToCart(id));
+        wishlist.clear();
+        saveWishlist();
+        closeWishlist();
+        openCart();
+      };
+
+      // Product Grid Delegation (Cards, Quick Add, Wishlist)
       document.getElementById('product-grid').addEventListener('click', (e) => {
         const quickAdd = e.target.closest('button[data-action="quick-add"]');
         if (quickAdd) {
@@ -773,7 +1184,17 @@
         }
       });
 
-      // Filter Buttons
+      // Home page quick acquire button
+      document.querySelectorAll('button[data-action="quick-add"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = btn.dataset.id;
+          addItemToCart(id);
+          openCart();
+        });
+      });
+
+      // Filter Buttons in Catalog
       document.getElementById('filter-all-btn').onclick = () => {
         activeFilter = 'all';
         renderCatalog();
@@ -796,8 +1217,6 @@
       };
 
       // Cart Drawer triggers
-      document.getElementById('bag-btn').onclick = openCart;
-      document.getElementById('nav-bag').onclick = openCart;
       document.getElementById('close-cart-btn').onclick = closeCart;
       document.getElementById('cart-drawer-backdrop').onclick = (e) => {
         if (e.target.id === 'cart-drawer-backdrop') closeCart();
@@ -843,7 +1262,6 @@
         searchInput.value = '';
       }
       document.getElementById('search-btn').onclick = openSearch;
-      document.getElementById('nav-search').onclick = openSearch;
       document.getElementById('close-search-btn').onclick = closeSearch;
       searchModal.onclick = (e) => { if (e.target.id === 'search-modal-backdrop') closeSearch(); };
 
@@ -896,12 +1314,6 @@
       };
       document.getElementById('close-success-btn').onclick = () => {
         document.getElementById('checkout-success-modal').classList.add('hidden');
-      };
-
-      // Wishlist tab trigger
-      document.getElementById('nav-curated').onclick = () => {
-        const favCount = wishlist.size;
-        alert(`You currently have ${favCount} curated piece${favCount === 1 ? '' : 's'} in your private wishlist.`);
       };
     });
   </script>

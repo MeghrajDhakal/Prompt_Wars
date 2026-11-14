@@ -25,6 +25,8 @@
 | **FR-12** | Search Modal | In-store instant search filtering products by title, category, and material tags. | Should Have | SDD §2.2 | Input Filter Test |
 | **FR-13** | Detail Modal | Fast drawer/modal presenting high-res product imagery, material specifications, and variant selectors. | Should Have | PRS §3.0 | Modal Flow Test |
 | **FR-14** | Dark Mode | High-contrast luxury night mode reversing palette to Obsidian Ink (`#121214`) and Alabaster text. | Could Have | DESIGN.md | Theme Toggle Audit |
+| **FR-15** | Home Page | Editorial exhibition landing page featuring hero manifesto banner, curated department portals, spotlight piece, and craftsmanship pillars. | Must Have | PRS §4.1 | UI Navigation Test |
+| **FR-16** | Wishlist Drawer | Dedicated slide-over drawer displaying saved items, valuation total, individual "To Bag" transfer, and "Move All" batch action. | Must Have | PRS §4.3 | State & Storage Test |
 
 *Prioritization Methodology: MoSCoW (Must have, Should have, Could have, Won't have).*
 
@@ -100,6 +102,42 @@ Feature: Free Shipping Calculation
     Then the subtotal becomes $269.37
     And the shipping meter displays "Complimentary Express Delivery Unlocked!"
     And shipping charge calculates as "$0.00"
+```
+
+### Scenario 4: Viewing and Managing Saved Pieces in Wishlist Drawer
+```gherkin
+Feature: Wishlist Drawer Management
+  As a customer curating luxury pieces
+  I want a dedicated drawer to review my saved items
+  So that I can transfer them to my shopping bag or remove them
+
+  Scenario: Opening Wishlist Drawer and Moving Item to Bag
+    Given I have "Le Bag Autre" saved in my wishlist
+    When I tap the Wishlist button on the header or floating island navigation
+    Then the Wishlist Drawer slides open from the right
+    And displays "Le Bag Autre" with price "$2,458.77"
+    And displays the total curation valuation "$2,458.77"
+    When I tap "To Bag" on the "Le Bag Autre" card
+    Then "Le Bag Autre" is transferred to the shopping bag
+    And removed from the wishlist
+    And the Cart Drawer slides open with "Le Bag Autre" present
+```
+
+### Scenario 5: Seamless Navigation Between Home and Catalog
+```gherkin
+Feature: Multi-View Navigation
+  As a visitor
+  I want to transition between the grand editorial Home page and the Accessories catalog
+  So that I can explore curated collections and specific product pieces
+
+  Scenario: Navigating from Home to Catalog and back
+    Given I am on the Home exhibition page
+    When I tap "Explore SS26 Capsule" or the "Accessories" department card
+    Then the view transitions smoothly to the Accessories catalog
+    And the bottom navigation "Catalog" indicator becomes active
+    When I tap "Home" in the breadcrumbs or the top logo
+    Then the view returns to the Home exhibition banner
+    And the bottom navigation "Home" indicator becomes active
 ```
 
 ---

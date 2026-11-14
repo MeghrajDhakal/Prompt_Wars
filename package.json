@@ -1,0 +1,31 @@
+{
+  "name": "luxe-editorial-commerce",
+  "version": "1.0.0",
+  "description": "Luxe Editorial Commerce SS26 Capsule — Avant-garde luxury accessories storefront hardened against the 12 BreakingBreach reliability pillars",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/**/*.test.js",
+    "lint": "eslint . --ext .js",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": [
+    "ecommerce",
+    "luxury",
+    "breakingbreach",
+    "reliability",
+    "accessibility",
+    "stripe",
+    "ss26-capsule",
+    "prompt-wars"
+  ],
+  "author": "Meghraj Dhakal <meghrajdhakal966@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  }
+}

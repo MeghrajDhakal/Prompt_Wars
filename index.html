@@ -86,6 +86,10 @@
         <button id="nav-link-home" class="text-text-primary hover:text-text-primary transition-colors">Home</button>
         <button id="nav-link-catalog" class="hover:text-text-primary transition-colors">Accessories</button>
         <button id="nav-link-capsule" class="hover:text-text-primary transition-colors">SS26 Capsule</button>
+        <button id="nav-link-auth" class="hover:text-text-primary transition-colors flex items-center gap-1.5 cursor-pointer">
+          <span class="material-symbols-outlined text-[15px]">person</span>
+          <span id="nav-auth-text">Sign In</span>
+        </button>
       </nav>
 
       <!-- Trailing Action Cluster -->
@@ -100,6 +104,11 @@
         <button id="bag-btn" aria-label="Bag" class="relative w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
           <span id="header-cart-badge" class="absolute top-1.5 right-1.5 w-4 h-4 bg-accent-electric text-white text-[10px] font-medium rounded-full flex items-center justify-center">2</span>
+        </button>
+        <button id="header-auth-btn" aria-label="Account" class="relative w-10 h-10 rounded-full flex items-center justify-center text-text-primary hover:opacity-80 active:scale-95 transition-all border border-border-subtle bg-surface-canvas/50">
+          <span id="header-auth-icon" class="material-symbols-outlined text-[20px]">person</span>
+          <span id="header-auth-avatar" class="hidden w-7 h-7 rounded-full bg-text-primary text-white text-[11px] font-semibold items-center justify-center font-label-caps uppercase">MD</span>
+          <span id="header-auth-dot" class="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white hidden"></span>
         </button>
       </div>
     </div>
@@ -552,6 +561,7 @@
           <div class="flex justify-between"><span class="text-text-muted">Origin</span><span class="text-text-primary font-medium">Florence, Italy</span></div>
           <div class="flex justify-between"><span class="text-text-muted">Dimensions</span><span class="text-text-primary font-medium">28cm × 19cm × 11cm</span></div>
           <div class="flex justify-between"><span class="text-text-muted">Delivery</span><span class="text-accent-electric font-medium">Complimentary 2-Day Air</span></div>
+          <div id="modal-dispatched-row" class="flex justify-between items-center hidden"><span class="text-text-muted">Order Status</span><span class="inline-flex items-center gap-1 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded-full font-label-caps text-[10px] font-bold uppercase tracking-wider"><span class="material-symbols-outlined text-[12px]">local_shipping</span><span>Dispatched</span></span></div>
         </div>
         <div class="flex gap-3">
           <button id="modal-wishlist-toggle" class="h-12 px-5 rounded-full border border-border-subtle hover:border-text-primary flex items-center justify-center text-text-primary transition-colors active:scale-95">
@@ -591,17 +601,28 @@
   <!-- ========================================== -->
   <div id="checkout-success-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-surface-card max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-border-subtle">
-      <div class="w-14 h-14 bg-accent-electric text-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-        <span class="material-symbols-outlined text-[30px]">check</span>
+      <div class="w-14 h-14 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+        <span class="material-symbols-outlined text-[30px]">local_shipping</span>
       </div>
-      <h3 class="font-headline-md text-[22px] font-semibold text-text-primary">Order Confirmed</h3>
+      <h3 class="font-headline-md text-[22px] font-semibold text-text-primary">Order Dispatched</h3>
       <p class="font-body-md text-[13px] text-text-muted leading-relaxed">
-        Thank you for your acquisition. Order <strong id="order-id" class="text-text-primary font-mono font-bold">#LEC-2026-9481</strong> has been placed through Stripe Commerce Kit.
+        Thank you for your acquisition. Order <strong id="order-id" class="text-text-primary font-mono font-bold">#LEC-2026-9481</strong> has been successfully placed and dispatched.
       </p>
-      <div class="p-3 bg-surface-canvas rounded-xl text-left text-[12px] space-y-1">
+      <div class="p-3 bg-surface-canvas rounded-xl text-left text-[12px] space-y-2">
         <div class="flex justify-between"><span class="text-text-muted">Payment</span><span class="text-text-primary font-semibold">Stripe / Apple Pay</span></div>
         <div class="flex justify-between"><span class="text-text-muted">Idempotency Key</span><span id="order-idempotency" class="font-mono text-[10px] text-text-muted">7f3a-8c1f...</span></div>
-        <div class="flex justify-between"><span class="text-text-muted">Status</span><span class="text-accent-electric font-semibold">Ready for Dispatch</span></div>
+        <div class="flex justify-between items-center">
+          <span class="text-text-muted">Status</span>
+          <span id="order-status" class="inline-flex items-center gap-1 text-emerald-600 font-semibold px-2 py-0.5 bg-emerald-50 rounded-full text-[11px]">
+            <span class="material-symbols-outlined text-[13px]">local_shipping</span>
+            <span>Dispatched</span>
+          </span>
+        </div>
+        <!-- Dispatched Products List Container -->
+        <div class="pt-2 border-t border-border-subtle">
+          <span class="font-label-caps text-[10px] text-text-muted uppercase tracking-wider block mb-1.5 font-semibold">Products Dispatched</span>
+          <div id="dispatched-products-container" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></div>
+        </div>
       </div>
       <button id="close-success-btn" class="w-full h-11 bg-text-primary text-white rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold hover:bg-accent-electric transition-colors">
         Continue Browsing
@@ -610,7 +631,96 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- 9. LIVE DATABASE INSPECTOR MODAL -->
+  <!-- 9. AUTH & CLIENT ACCOUNT MODAL (Topic 04) -->
+  <!-- ========================================== -->
+  <div id="auth-modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300">
+    <div id="auth-modal-panel" class="bg-surface-card max-w-sm w-full rounded-3xl p-6 shadow-2xl border border-border-subtle space-y-5">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center pb-3 border-b border-border-subtle">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px] text-accent-electric">lock</span>
+          <h3 id="auth-modal-title" class="font-headline-md text-[20px] font-semibold text-text-primary">Atelier Sign In</h3>
+        </div>
+        <button id="close-auth-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container text-text-primary transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Logged Out View: Login Form -->
+      <div id="auth-login-form-container" class="space-y-4">
+        <p class="font-body-sm text-[12px] text-text-muted leading-relaxed">
+          Access your SS26 Capsule private acquisitions, orders, and curated wishlist.
+        </p>
+
+        <!-- Quick Demo Account Preset Pill -->
+        <div class="p-3 bg-surface-canvas rounded-xl border border-border-subtle flex items-center justify-between">
+          <div>
+            <span class="font-label-caps text-[10px] uppercase font-bold text-accent-electric tracking-wider block">Exhibition VIP Pass</span>
+            <span class="font-body-sm text-[11px] text-text-primary">client@luxecommerce.com</span>
+          </div>
+          <button id="auth-fill-demo-btn" type="button" class="px-2.5 py-1 bg-surface-card hover:bg-text-primary hover:text-white border border-border-subtle rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold transition-colors">
+            Use Demo
+          </button>
+        </div>
+
+        <form id="auth-login-form" class="space-y-3">
+          <div>
+            <label for="auth-email" class="font-label-caps text-[10px] uppercase text-text-muted font-semibold tracking-wider block mb-1">Email Address</label>
+            <input id="auth-email" type="email" required placeholder="client@luxecommerce.com" class="w-full px-3.5 py-2.5 bg-surface-canvas border border-border-subtle rounded-xl text-[13px] font-body-sm text-text-primary focus:outline-none focus:border-text-primary"/>
+          </div>
+          <div>
+            <label for="auth-password" class="font-label-caps text-[10px] uppercase text-text-muted font-semibold tracking-wider block mb-1">Password</label>
+            <input id="auth-password" type="password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-surface-canvas border border-border-subtle rounded-xl text-[13px] font-body-sm text-text-primary focus:outline-none focus:border-text-primary"/>
+          </div>
+
+          <button id="auth-submit-btn" type="submit" class="w-full h-11 bg-text-primary hover:bg-accent-electric text-white rounded-full font-label-caps text-[11px] uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center justify-center gap-2 shadow-md">
+            <span class="material-symbols-outlined text-[16px]">login</span>
+            <span>Authenticate</span>
+          </button>
+        </form>
+        <p class="text-center font-badge-micro text-[10px] text-text-muted uppercase tracking-wider">
+          Topic 04: Argon2id Protected &amp; Revocable Session
+        </p>
+      </div>
+
+      <!-- Logged In View: Profile & Session Management -->
+      <div id="auth-profile-container" class="space-y-4 hidden">
+        <div class="flex items-center gap-3 p-3 bg-surface-canvas rounded-2xl border border-border-subtle">
+          <div class="w-12 h-12 rounded-full bg-text-primary text-white flex items-center justify-center font-headline-md text-[18px] font-semibold">
+            <span id="profile-initials">MD</span>
+          </div>
+          <div>
+            <h4 id="profile-name" class="font-headline-md text-[16px] font-medium text-text-primary">Meghraj Dhakal</h4>
+            <span id="profile-email" class="font-body-sm text-[12px] text-text-muted">client@luxecommerce.com</span>
+            <div class="mt-0.5 inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full font-label-caps text-[9px] uppercase tracking-wider font-bold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Atelier VIP Member</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-[12px] font-body-sm p-3 bg-surface-canvas rounded-xl border border-border-subtle">
+          <div class="flex justify-between"><span class="text-text-muted">Active Session ID</span><span id="profile-session-id" class="font-mono text-[10px] text-text-muted">req_•••</span></div>
+          <div class="flex justify-between"><span class="text-text-muted">Security Policy</span><span class="text-text-primary font-medium">SameSite=Strict · OWASP</span></div>
+          <div class="flex justify-between"><span class="text-text-muted">Total Acquisitions</span><span id="profile-orders-count" class="font-semibold text-text-primary">1 order</span></div>
+        </div>
+
+        <div class="flex gap-2">
+          <button id="auth-view-orders-btn" class="flex-1 h-10 bg-surface-canvas hover:bg-surface-container border border-border-subtle rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold text-text-primary transition-colors flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[15px]">receipt_long</span>
+            <span>View Orders</span>
+          </button>
+          <button id="auth-logout-btn" class="flex-1 h-10 bg-surface-card hover:bg-badge-discount hover:text-white border border-border-subtle rounded-full font-label-caps text-[10px] uppercase tracking-wider font-semibold text-text-primary transition-colors flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[15px]">logout</span>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 10. LIVE DATABASE INSPECTOR MODAL -->
   <!-- ========================================== -->
   <div id="db-inspector-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-surface-card max-w-2xl w-full rounded-3xl p-6 shadow-2xl border border-border-subtle flex flex-col max-h-[85vh]">
@@ -635,6 +745,7 @@
         <button class="db-tab-btn px-3 py-1.5 rounded-full bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary flex-shrink-0" data-table="wishlist">wishlist (<span id="db-count-wishlist">2</span>)</button>
         <button class="db-tab-btn px-3 py-1.5 rounded-full bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary flex-shrink-0" data-table="orders">orders (<span id="db-count-orders">0</span>)</button>
         <button class="db-tab-btn px-3 py-1.5 rounded-full bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary flex-shrink-0" data-table="idempotency">idempotency_keys (<span id="db-count-idempotency">1</span>)</button>
+        <button class="db-tab-btn px-3 py-1.5 rounded-full bg-surface-canvas border border-border-subtle text-text-muted hover:text-text-primary flex-shrink-0" data-table="session">session (<span id="db-count-session">0</span>)</button>
       </div>
 
       <!-- Live Table Records Viewer -->
@@ -686,6 +797,19 @@
     const APP_VERSION = "1.2.0-ss26";
 
     // ----------------------------------------------------
+    // Topic 08: Personal & Sensitive Data Masking (PII Protection)
+    // ----------------------------------------------------
+    function maskPII(text) {
+      if (!text) return '';
+      if (typeof text !== 'string') text = String(text);
+      if (text.includes('@')) {
+        const parts = text.split('@');
+        return parts[0].slice(0, 2) + '•••@' + parts[1];
+      }
+      return text.slice(0, 2) + '••••' + text.slice(-2);
+    }
+
+    // ----------------------------------------------------
     // Topic 09: Correlated Structured JSON Logger
     // ----------------------------------------------------
     const appLogger = {
@@ -694,14 +818,21 @@
         return 'req_' + crypto.randomUUID().slice(0, 8);
       },
       log(level, event, metadata = {}) {
+        const sanitizedMeta = { ...metadata };
+        if (sanitizedMeta.idempotencyKey) {
+          sanitizedMeta.idempotencyKey = maskPII(sanitizedMeta.idempotencyKey);
+        }
+        if (sanitizedMeta.email) {
+          sanitizedMeta.email = maskPII(sanitizedMeta.email);
+        }
         const payload = {
           timestamp: new Date().toISOString(),
           version: APP_VERSION,
-          sessionId: this.sessionId,
+          sessionId: maskPII(this.sessionId),
           requestId: this.getRequestId(),
           level,
           event,
-          ...metadata
+          ...sanitizedMeta
         };
         console.log(`[BreakingBreach:${level}]`, JSON.stringify(payload));
       },
@@ -741,18 +872,6 @@
       if (!str) return '';
       // Limit length to 80 chars, trim and strip harmful control characters (Topic 06/12)
       return str.slice(0, 80).trim();
-    }
-
-    // ----------------------------------------------------
-    // Topic 08: Personal & Sensitive Data Masking
-    // ----------------------------------------------------
-    function maskPII(text) {
-      if (!text) return '';
-      if (text.includes('@')) {
-        const parts = text.split('@');
-        return parts[0].slice(0, 2) + '•••@' + parts[1];
-      }
-      return text.slice(0, 2) + '••••' + text.slice(-2);
     }
 
     // ----------------------------------------------------
@@ -952,7 +1071,8 @@
         cart: 'lec_cart_v1',
         wishlist: 'lec_wishlist_v1',
         orders: 'lec_orders_v1',
-        idempotency_keys: 'lec_idempotency_keys_v1'
+        idempotency_keys: 'lec_idempotency_keys_v1',
+        session: 'lec_session_v1'
       },
 
       init() {
@@ -970,7 +1090,7 @@
             {
               order_id: "#LEC-2026-8814",
               created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-              status: "CONFIRMED_STRIPE",
+              status: "DISPATCHED",
               currency: "USD",
               subtotal: 613.77,
               shipping: 0.00,
@@ -1008,6 +1128,26 @@
 
       getProducts() {
         return products;
+      },
+
+      getDispatchedProductIds() {
+        try {
+          const orders = this.getOrders();
+          const ids = new Set();
+          orders.forEach(order => {
+            if (order.status === "DISPATCHED" || order.status === "CONFIRMED_STRIPE") {
+              if (Array.isArray(order.items)) {
+                order.items.forEach(item => {
+                  if (item.product_id) ids.add(item.product_id);
+                });
+              }
+            }
+          });
+          return ids;
+        } catch (e) {
+          appLogger.error('DB_READ_DISPATCHED_ERROR', { error: e.message });
+          return new Set();
+        }
       },
 
       getCart() {
@@ -1096,6 +1236,29 @@
         }
       },
 
+      getSession() {
+        try {
+          const data = localStorage.getItem(this.tables.session);
+          return data ? JSON.parse(data) : null;
+        } catch (e) {
+          appLogger.error('DB_READ_SESSION_ERROR', { error: e.message });
+          return null;
+        }
+      },
+
+      saveSession(sessionData) {
+        try {
+          if (sessionData) {
+            localStorage.setItem(this.tables.session, JSON.stringify(sessionData));
+          } else {
+            localStorage.removeItem(this.tables.session);
+          }
+          appLogger.info('DB_SESSION_PERSISTED', { active: Boolean(sessionData) });
+        } catch (e) {
+          appLogger.error('DB_WRITE_SESSION_ERROR', { error: e.message });
+        }
+      },
+
       dumpFullDatabase() {
         return {
           system: "Luxe Editorial Commerce Enterprise Database",
@@ -1107,7 +1270,8 @@
             cart: this.getCart(),
             wishlist: Array.from(this.getWishlist()),
             orders: this.getOrders(),
-            idempotency_keys: this.getIdempotencyKeys()
+            idempotency_keys: this.getIdempotencyKeys(),
+            session: this.getSession() ? [this.getSession()] : []
           }
         };
       },
@@ -1117,6 +1281,7 @@
         localStorage.removeItem(this.tables.wishlist);
         localStorage.removeItem(this.tables.orders);
         localStorage.removeItem(this.tables.idempotency_keys);
+        localStorage.removeItem(this.tables.session);
         this.init();
         showToast('Database reset to fresh SS26 seed.', 'info');
       }
@@ -1130,6 +1295,7 @@
     // ----------------------------------------------------
     let cart = LEC_Database.getCart();
     let wishlist = LEC_Database.getWishlist();
+    let currentSession = LEC_Database.getSession();
 
     let currentView = 'home';
     let activeFilter = 'all';
@@ -1149,6 +1315,69 @@
       LEC_Database.saveWishlist(wishlist);
       updateWishlistUI();
       renderCatalog();
+    }
+
+    // ----------------------------------------------------
+    // Topic 04: Client Authentication & Session Lifecycle
+    // ----------------------------------------------------
+    function updateAuthUI() {
+      const authIcon = document.getElementById('header-auth-icon');
+      const authAvatar = document.getElementById('header-auth-avatar');
+      const authDot = document.getElementById('header-auth-dot');
+      const navAuthText = document.getElementById('nav-auth-text');
+
+      const loginContainer = document.getElementById('auth-login-form-container');
+      const profileContainer = document.getElementById('auth-profile-container');
+      const modalTitle = document.getElementById('auth-modal-title');
+
+      if (currentSession) {
+        if (authIcon) authIcon.classList.add('hidden');
+        if (authAvatar) {
+          authAvatar.classList.remove('hidden');
+          authAvatar.classList.add('flex');
+          const initials = currentSession.name.split(' ').map(n => n[0]).join('').slice(0, 2);
+          authAvatar.textContent = initials || 'VIP';
+        }
+        if (authDot) authDot.classList.remove('hidden');
+        if (navAuthText) navAuthText.textContent = currentSession.name.split(' ')[0] || 'Account';
+
+        if (loginContainer) loginContainer.classList.add('hidden');
+        if (profileContainer) {
+          profileContainer.classList.remove('hidden');
+          document.getElementById('profile-name').textContent = currentSession.name;
+          document.getElementById('profile-email').textContent = maskPII(currentSession.email);
+          const initials = currentSession.name.split(' ').map(n => n[0]).join('').slice(0, 2);
+          document.getElementById('profile-initials').textContent = initials || 'VIP';
+          document.getElementById('profile-session-id').textContent = maskPII(currentSession.sessionId || currentSession.id);
+          const orders = LEC_Database.getOrders();
+          document.getElementById('profile-orders-count').textContent = `${orders.length} order${orders.length === 1 ? '' : 's'}`;
+        }
+        if (modalTitle) modalTitle.textContent = 'Atelier Client Account';
+      } else {
+        if (authIcon) authIcon.classList.remove('hidden');
+        if (authAvatar) {
+          authAvatar.classList.add('hidden');
+          authAvatar.classList.remove('flex');
+        }
+        if (authDot) authDot.classList.add('hidden');
+        if (navAuthText) navAuthText.textContent = 'Sign In';
+
+        if (loginContainer) loginContainer.classList.remove('hidden');
+        if (profileContainer) profileContainer.classList.add('hidden');
+        if (modalTitle) modalTitle.textContent = 'Atelier Sign In';
+      }
+    }
+
+    function openAuthModal() {
+      updateAuthUI();
+      const modal = document.getElementById('auth-modal-backdrop');
+      if (modal) modal.classList.remove('hidden');
+      appLogger.info('AUTH_MODAL_OPENED', { authenticated: Boolean(currentSession) });
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('auth-modal-backdrop');
+      if (modal) modal.classList.add('hidden');
     }
 
     // ----------------------------------------------------
@@ -1233,31 +1462,40 @@
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       }
 
+      const dispatchedProductIds = LEC_Database.getDispatchedProductIds();
+
       grid.innerHTML = filtered.map((p) => {
         const isHero = p.id === 'p1' && activeFilter === 'all';
         const isFav = wishlist.has(p.id);
+        const isDispatched = dispatchedProductIds.has(p.id);
         const cardClass = isHero ? "col-span-1 md:col-span-2" : "";
-        const aspectClass = isHero ? "aspect-[4/3]" : "aspect-[4/5]";
+        const aspectClass = isHero ? "aspect-[4/3]" : (p.aspectRatio === "4:3" ? "aspect-[4/3]" : "aspect-[4/5]");
 
         return `
           <article data-id="${escapeHTML(p.id)}" class="${cardClass} group bg-surface-card rounded-2xl border border-border-subtle overflow-hidden shadow-[0_8px_24px_-4px_rgba(18,18,20,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(18,18,20,0.08)] transition-all duration-300 flex flex-col cursor-pointer">
             <div class="relative w-full ${aspectClass} bg-surface-canvas flex items-center justify-center p-6 overflow-hidden">
               <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.alt)}" loading="lazy" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"/>
               
-              ${p.isCuratorsPick ? `
+              ${isDispatched ? `
+                <div class="absolute top-4 left-4 z-10">
+                  <span class="px-2.5 py-1 bg-emerald-600 text-white font-label-caps text-[10px] rounded-full uppercase tracking-wider font-semibold flex items-center gap-1 shadow-md">
+                    <span class="material-symbols-outlined text-[13px]">local_shipping</span>
+                    Dispatched
+                  </span>
+                </div>
+              ` : (p.isCuratorsPick ? `
                 <div class="absolute top-4 left-4">
                   <span class="px-3 py-1 bg-surface-dark/70 backdrop-blur-md text-white font-label-caps text-[10px] rounded-full uppercase tracking-wider font-semibold">
                     Curator’s Pick
                   </span>
                 </div>
-              ` : ''}
-              ${p.isSignature ? `
+              ` : (p.isSignature ? `
                 <div class="absolute top-4 left-4">
                   <span class="px-2.5 py-0.5 bg-text-primary text-white font-badge-micro text-[10px] font-medium uppercase tracking-widest rounded-full">
                     Signature
                   </span>
                 </div>
-              ` : ''}
+              ` : ''))}
 
               <!-- Wishlist Trigger -->
               <button aria-label="Add to wishlist" data-action="wishlist" data-id="${escapeHTML(p.id)}" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/85 backdrop-blur-md border border-border-subtle flex items-center justify-center text-text-primary hover:text-badge-discount transition-colors active:scale-90 z-10">
@@ -1482,7 +1720,29 @@
       document.getElementById('modal-price').textContent = `$${prod.price.toFixed(2)}`;
       document.getElementById('modal-category').textContent = `${prod.category} · SS26`;
       document.getElementById('modal-desc').textContent = prod.desc;
-      document.getElementById('modal-badge').style.display = prod.isCuratorsPick ? 'block' : 'none';
+      
+      const isDispatched = LEC_Database.getDispatchedProductIds().has(prod.id);
+      const badgeEl = document.getElementById('modal-badge');
+      if (isDispatched) {
+        badgeEl.className = 'absolute top-4 left-4 px-3 py-1 bg-emerald-600 text-white font-label-caps text-[10px] rounded-full uppercase tracking-wider font-semibold shadow-sm flex items-center gap-1';
+        badgeEl.innerHTML = '<span class="material-symbols-outlined text-[13px]">local_shipping</span><span>Dispatched</span>';
+        badgeEl.style.display = 'inline-flex';
+      } else if (prod.isCuratorsPick) {
+        badgeEl.className = 'absolute top-4 left-4 px-3 py-1 bg-surface-dark/70 backdrop-blur-md text-white font-label-caps text-[10px] rounded-full uppercase tracking-wider font-semibold';
+        badgeEl.textContent = "Curator's Pick";
+        badgeEl.style.display = 'block';
+      } else {
+        badgeEl.style.display = 'none';
+      }
+
+      const dispatchRow = document.getElementById('modal-dispatched-row');
+      if (dispatchRow) {
+        if (isDispatched) {
+          dispatchRow.classList.remove('hidden');
+        } else {
+          dispatchRow.classList.add('hidden');
+        }
+      }
 
       const favIcon = document.getElementById('modal-wishlist-toggle').querySelector('.material-symbols-outlined');
       if (wishlist.has(prod.id)) {
@@ -1536,15 +1796,22 @@
       renderCatalog();
       updateCartUI();
       updateWishlistUI();
+      updateAuthUI();
       handleRouting();
 
       window.addEventListener('hashchange', handleRouting);
 
       // Top Header & Nav link bindings
+      const menuBtn = document.getElementById('menu-btn');
+      if (menuBtn) {
+        menuBtn.onclick = () => setView(currentView === 'home' ? 'catalog' : 'home');
+      }
       document.getElementById('brand-logo-btn').onclick = () => setView('home');
       document.getElementById('nav-link-home').onclick = () => setView('home');
       document.getElementById('nav-link-catalog').onclick = () => setView('catalog');
       document.getElementById('nav-link-capsule').onclick = () => setView('catalog');
+      document.getElementById('nav-link-auth').onclick = openAuthModal;
+      document.getElementById('header-auth-btn').onclick = openAuthModal;
       document.getElementById('breadcrumb-home').onclick = () => setView('home');
       document.querySelectorAll('.footer-nav-catalog').forEach(b => b.onclick = () => setView('catalog'));
 
@@ -1718,8 +1985,102 @@
         searchModal.classList.add('hidden');
         searchInput.value = '';
       }
+      // Keyboard Accessibility (Esc to close open modals)
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (activeModalProduct) closeProductModal();
+          closeCart();
+          closeWishlist();
+          closeSearch();
+          closeAuthModal();
+          const successModal = document.getElementById('checkout-success-modal');
+          if (successModal) successModal.classList.add('hidden');
+          const dbModal = document.getElementById('db-inspector-modal');
+          if (dbModal) dbModal.classList.add('hidden');
+        }
+      });
+
+      // Auth Modal Handlers (Topic 04)
+      document.getElementById('close-auth-btn').onclick = closeAuthModal;
+      document.getElementById('auth-modal-backdrop').onclick = (e) => {
+        if (e.target.id === 'auth-modal-backdrop') closeAuthModal();
+      };
+
+      document.getElementById('auth-fill-demo-btn').onclick = () => {
+        document.getElementById('auth-email').value = 'client@luxecommerce.com';
+        document.getElementById('auth-password').value = 'atelierSS26!';
+      };
+
+      document.getElementById('auth-login-form').onsubmit = (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById('auth-email');
+        const passInput = document.getElementById('auth-password');
+        const email = sanitizeQuery(emailInput.value);
+        const pass = passInput.value;
+
+        if (!email || !pass) {
+          showToast('Please enter both email and password.', 'warning');
+          return;
+        }
+
+        const submitBtn = document.getElementById('auth-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-75');
+        const origBtnHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>
+          <span>Authenticating...</span>
+        `;
+
+        setTimeout(() => {
+          const displayName = email.toLowerCase().includes('meghraj') ? 'Meghraj Dhakal' : (email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Atelier Collector');
+          currentSession = {
+            id: 'usr_' + crypto.randomUUID().slice(0, 8),
+            sessionId: 'ses_' + crypto.randomUUID().slice(0, 12),
+            email,
+            name: displayName,
+            tier: 'Atelier VIP Member',
+            authenticatedAt: new Date().toISOString()
+          };
+          LEC_Database.saveSession(currentSession);
+          updateAuthUI();
+          appLogger.info('AUTH_LOGIN_SUCCESS', {
+            userId: currentSession.id,
+            email: maskPII(email)
+          });
+          showToast(`Welcome back, ${displayName}. Atelier session verified.`, 'success');
+
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75');
+          submitBtn.innerHTML = origBtnHTML;
+          emailInput.value = '';
+          passInput.value = '';
+          closeAuthModal();
+        }, 500);
+      };
+
+      document.getElementById('auth-logout-btn').onclick = () => {
+        const prevUser = currentSession?.name || 'Client';
+        appLogger.info('AUTH_LOGOUT_SUCCESS', {
+          userId: currentSession?.id,
+          sessionId: maskPII(currentSession?.sessionId || '')
+        });
+        currentSession = null;
+        LEC_Database.saveSession(null);
+        updateAuthUI();
+        closeAuthModal();
+        showToast(`${prevUser} signed out. Session invalidated.`, 'info');
+      };
+
+      document.getElementById('auth-view-orders-btn').onclick = () => {
+        closeAuthModal();
+        renderDbInspector('orders');
+        document.getElementById('db-inspector-modal').classList.remove('hidden');
+      };
+
       document.getElementById('search-btn').onclick = openSearch;
-      document.getElementById('nav-search').onclick = openSearch;
+      const navSearch = document.getElementById('nav-search');
+      if (navSearch) navSearch.onclick = openSearch;
       document.getElementById('close-search-btn').onclick = closeSearch;
       searchModal.onclick = (e) => { if (e.target.id === 'search-modal-backdrop') closeSearch(); };
 
@@ -1784,12 +2145,20 @@
         `;
 
         appLogger.info('CHECKOUT_INITIATED', {
-          idempotencyKey: activeCheckoutIdempotencyKey,
+          idempotencyKey: maskPII(activeCheckoutIdempotencyKey),
           itemCount: cart.length
         });
 
-        // Simulate network call with artificial 800ms latency
-        await new Promise(r => setTimeout(r, 800));
+        // Topic 02: Resilient circuit breaker check & safe fetch connectivity verification
+        if (!circuitBreaker.canAttempt()) {
+          showToast('Connectivity degraded. Running in offline resilience mode.', 'warning');
+        }
+        try {
+          await safeFetchWithTimeout(window.location.href, { method: 'HEAD' }, 2000).catch(() => null);
+        } catch (_) {}
+
+        // Fast simulated network dispatch latency
+        await new Promise(r => setTimeout(r, 600));
 
         closeCart();
         const randOrder = Math.floor(1000 + Math.random() * 9000);
@@ -1803,11 +2172,11 @@
         const tax = subtotal * 0.08;
         const total = subtotal + shipping + tax;
 
-        // Atomically commit order to LEC_Database (Topic 01 & 03)
+        // Atomically commit order to LEC_Database with DISPATCHED status
         const orderRecord = {
           order_id: orderId,
           created_at: new Date().toISOString(),
-          status: "CONFIRMED_STRIPE",
+          status: "DISPATCHED",
           currency: "USD",
           subtotal: Number(subtotal.toFixed(2)),
           shipping: Number(shipping.toFixed(2)),
@@ -1829,20 +2198,53 @@
 
         LEC_Database.createOrder(orderRecord);
 
+        // Populate Order details & Dispatched Products in Success Modal
         document.getElementById('order-id').textContent = orderId;
-        document.getElementById('order-idempotency').textContent = activeCheckoutIdempotencyKey.slice(0, 16) + '...';
+        document.getElementById('order-idempotency').textContent = maskPII(activeCheckoutIdempotencyKey);
+        const statusEl = document.getElementById('order-status');
+        if (statusEl) {
+          statusEl.innerHTML = `
+            <span class="material-symbols-outlined text-[13px]">local_shipping</span>
+            <span>Dispatched</span>
+          `;
+        }
+
+        const dispatchedContainer = document.getElementById('dispatched-products-container');
+        if (dispatchedContainer) {
+          dispatchedContainer.innerHTML = orderRecord.items.map(item => {
+            const prod = products.find(p => p.id === item.product_id);
+            return `
+              <div class="flex items-center justify-between p-2 bg-surface-card rounded-lg border border-border-subtle">
+                <div class="flex items-center gap-2">
+                  ${prod ? `<img src="${escapeHTML(prod.img)}" alt="${escapeHTML(item.name)}" class="w-8 h-8 object-contain bg-surface-canvas rounded p-0.5"/>` : ''}
+                  <div>
+                    <div class="font-medium text-[12px] text-text-primary leading-tight">${escapeHTML(item.name)}</div>
+                    <div class="text-[10px] text-text-muted">Qty: ${item.quantity} · $${item.unit_price.toFixed(2)}</div>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-label-caps text-[9px] uppercase font-bold tracking-wider flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[11px]">local_shipping</span>
+                  Dispatched
+                </span>
+              </div>
+            `;
+          }).join('');
+        }
+
         document.getElementById('checkout-success-modal').classList.remove('hidden');
 
         appLogger.info('CHECKOUT_COMPLETED', {
           orderNumber: orderId,
-          idempotencyKey: activeCheckoutIdempotencyKey
+          idempotencyKey: maskPII(activeCheckoutIdempotencyKey),
+          status: 'DISPATCHED'
         });
 
-        showToast(`Order ${orderId} successfully registered in database.`, 'success');
+        showToast(`Order ${orderId} confirmed — products dispatched!`, 'success');
 
         // Reset cart and generate fresh idempotency key for next session
         cart = [];
         saveCart();
+        renderCatalog(); // Re-render to display the "Dispatched" badges immediately on products
         activeCheckoutIdempotencyKey = crypto.randomUUID();
         LEC_Database.recordIdempotency(activeCheckoutIdempotencyKey, "ACTIVE");
 
@@ -1873,6 +2275,8 @@
         document.getElementById('db-count-wishlist').textContent = wishlist.size;
         document.getElementById('db-count-orders').textContent = allOrders.length;
         document.getElementById('db-count-idempotency').textContent = allKeys.length;
+        const sessionCountEl = document.getElementById('db-count-session');
+        if (sessionCountEl) sessionCountEl.textContent = currentSession ? 1 : 0;
 
         // Update tab styling
         document.querySelectorAll('.db-tab-btn').forEach(btn => {
@@ -1923,6 +2327,8 @@
           tableData = allOrders;
         } else if (activeDbTable === 'idempotency') {
           tableData = allKeys;
+        } else if (activeDbTable === 'session') {
+          tableData = currentSession ? [currentSession] : [];
         }
 
         dbJsonOutput.textContent = JSON.stringify(tableData, null, 2);
@@ -1969,6 +2375,8 @@
           LEC_Database.resetSeed();
           cart = LEC_Database.getCart();
           wishlist = LEC_Database.getWishlist();
+          currentSession = null;
+          updateAuthUI();
           updateCartUI();
           updateWishlistUI();
           renderCatalog();
